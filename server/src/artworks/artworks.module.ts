@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ArtworksController } from './artworks.controller';
 import { ArtworksService } from './artworks.service';
+import { MongooseModule } from '@nestjs/mongoose'
+import { Artwork, ArtworkSchema } from './artwork.schema';
 
 @Module({
-    imports: [],
+    imports: [
+        MongooseModule.forFeature([{ name: Artwork.name, schema: ArtworkSchema }]),
+    ],
     controllers: [ArtworksController],
     providers: [ArtworksService],
 })
