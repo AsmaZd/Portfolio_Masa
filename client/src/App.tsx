@@ -3,8 +3,11 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import Gallery from "./pages/gallery/Gallery";
 
 function App() {
+
+  /*
   const [count, setCount] = useState(0)
 
   return (
@@ -117,6 +120,14 @@ function App() {
       <section id="spacer"></section>
     </>
   )
+}*/
+
+  return (
+    <div>
+      <Gallery />
+    </div>
+
+  )
 }
 
-export default App
+export default App;
