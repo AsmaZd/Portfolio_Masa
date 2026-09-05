@@ -15,7 +15,8 @@ import { ConfigSet } from 'ts-jest';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        uri: config.get<string>('MONGODB_URI'),  
+        uri: config.get<string>('MONGODB_URI'), 
+        dbName: "portfolio-db"
       })     
     }),
     ArtworkModule],
