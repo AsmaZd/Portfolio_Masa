@@ -30,4 +30,8 @@ export class ArtworksService {
         const updatedArtwork = this.artworkModel.findByIdAndUpdate(id, artwork, {returnDocument: 'after'}).exec(); 
         return updatedArtwork;
     }
+
+    async delete(id: string): Promise<Artwork | null>{
+        return this.artworkModel.findByIdAndDelete(id).exec();
+    }
 }
