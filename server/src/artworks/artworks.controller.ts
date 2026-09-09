@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { ArtworksService } from './artworks.service';
 import { CreateArtworkDto } from './dto/create-artwork.dto';
 import { UpdateArtworkDto } from './dto/update-artwork.dto';
@@ -13,7 +14,7 @@ export class ArtworksController{
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string){
+    findOne(@Param('id', ParseObjectIdPipe) id: string){
         return this.artworksService.findOne(id);
     }
 
@@ -24,13 +25,13 @@ export class ArtworksController{
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() artwork: UpdateArtworkDto){
+    update(@Param('id', ParseObjectIdPipe) id: string, @Body() artwork: UpdateArtworkDto){
         console.log(artwork);
         return this.artworksService.update(id, artwork);
     }
 
     @Delete(':id')
-    delete(@Param('id') id: string){
+    delete(@Param('id', ParseObjectIdPipe) id: string){
         return this.artworksService.delete(id);
     }
 }

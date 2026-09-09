@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Artwork } from "./schemas/artwork.schema";
@@ -18,7 +18,11 @@ export class ArtworksService {
     }
 
     async findOne(id: string): Promise<Artwork | null> {
-        return this.artworkModel.findById(id).exec();
+        const artwork = this.artworkModel.findById(id).exec();
+        if(!artwork){
+            throw new NotFoundException('Artwork with the "${id}" ID, not found');
+        }
+        return artwork;
     }
 
     async create(artwork: CreateArtworkDto): Promise<Artwork>{
@@ -27,11 +31,18 @@ export class ArtworksService {
     }
 
     async update(id: string, artwork: UpdateArtworkDto): Promise<Artwork | null>{
-        const updatedArtwork = this.artworkModel.findByIdAndUpdate(id, artwork, {returnDocument: 'after'}).exec(); 
+        const updatedArtwork = await this.artworkModel.findByIdAndUpdate(id, artwork, {returnDocument: 'after'}).exec(); 
+        if(!updatedArtwork){
+            throw new NotFoundException('Artwork with the "${id}" ID, not found');
+        }
         return updatedArtwork;
     }
 
     async delete(id: string): Promise<Artwork | null>{
-        return this.artworkModel.findByIdAndDelete(id).exec();
+        const deletedArtwork = this.artworkModel.findByIdAndDelete(id).exec();
+        if(!deletedArtwork){
+            throw new NotFoundException('Artwork with the "${id}" ID, not found');
+        }
+        return deletedArtwork;
     }
 }
