@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArtworkModule } from './artworks/artworks.module';
 import { ConfigSet } from 'ts-jest';
+import { UserModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { ConfigSet } from 'ts-jest';
         dbName: "portfolio-db"
       })     
     }),
-    ArtworkModule],
+    ArtworkModule,
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
