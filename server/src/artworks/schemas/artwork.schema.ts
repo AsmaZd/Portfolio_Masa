@@ -12,8 +12,8 @@ export class Artwork extends Document{
     @Prop({ required: true})
     imageUrl: string;
     
-    @Prop({ required: true})
-    category: ['dessin', 'crochet', 'design'];
+    @Prop({ required: true, enum: ['dessin', 'crochet', 'design'], default: 'dessin'})
+    category: string;
 
     @Prop([String])
     tags: string[]
