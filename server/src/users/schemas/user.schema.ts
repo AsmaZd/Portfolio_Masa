@@ -4,7 +4,7 @@ import { Document } from "mongoose";
 @Schema({timestamps: true})
 export class User extends Document{
     @Prop({required: true})
-    pseudo: string;
+    username: string;
 
     @Prop({required: true, enum: ['admin', 'user'], default: 'user'})
     role: string;
