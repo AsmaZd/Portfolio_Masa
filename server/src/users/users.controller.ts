@@ -17,6 +17,11 @@ export class UsersController{
         return this.usersService.findOne('id');
     }
 
+    @Get('email/:email')
+    findOneByEmail(@Param('email') email: string){
+        return this.usersService.findOneByEmail(email);
+    }
+
     @Post()
     create(@Body() user: CreateUserDto){
         return this.usersService.create(user);

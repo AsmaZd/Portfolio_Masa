@@ -25,6 +25,14 @@ export class UsersService{
         return user;
     }
 
+    async findOneByEmail(userEmail: string): Promise<User | undefined>{
+        const user = await this.userModel.findOne({email: userEmail}).exec();
+        if(!user){
+            throw new NotFoundException('User with the "${userEmail}" email, not found');
+        }
+        return user;
+    }
+
     async create(user: CreateUserDto): Promise<User>{
         const hashedPassword = await bcrypt.hash(user.password, 10);
 
