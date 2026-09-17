@@ -21,25 +21,25 @@ export class ArtworksController{
         return this.artworksService.findOne(id);
     }
 
-    @Post()
-    @Roles('admin')
     @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Post()
     create(@Body() artwork: CreateArtworkDto){
         console.log(artwork);
         return this.artworksService.create(artwork);
     }
 
-    @Put(':id')
-    @Roles('admin')
     @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Put(':id')
     update(@Param('id', ParseObjectIdPipe) id: string, @Body() artwork: UpdateArtworkDto){
         console.log(artwork);
         return this.artworksService.update(id, artwork);
     }
 
-    @Delete(':id')
-    @Roles('admin')
     @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Delete(':id')
     delete(@Param('id', ParseObjectIdPipe) id: string){
         return this.artworksService.delete(id);
     }

@@ -18,9 +18,9 @@ export class UsersController{
         return this.usersService.findAll();
     }
 
-    @Get(':id')
-    @Roles('admin')
     @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Get(':id')
     findOne(@Param('id', ParseObjectIdPipe) id: string){
         return this.usersService.findOne('id');
     }
