@@ -8,6 +8,7 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthController {
     constructor(private readonly authService: AuthService){}
 
+    @HttpCode(HttpStatus.CREATED)
     @Post('register')
     register(@Body() registerDto: RegisterDto)    {
         return this.authService.register(registerDto);
@@ -23,6 +24,13 @@ export class AuthController {
     @Get('me')
     findMe(@Request() request: any){
         return request.user;
+    }
+
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @UseGuards(AuthGuard)
+    @Post('logout')
+    logout(){
+        return;
     }
 
 }
