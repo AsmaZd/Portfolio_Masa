@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ArtworkModule } from './artworks/artworks.module';
 import { ConfigSet } from 'ts-jest';
 import { UserModule } from './users/users.module';
+import { SocialsModule } from './socials/socials.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { UserModule } from './users/users.module';
       })     
     }),
     ArtworkModule,
-    UserModule],
+    UserModule,
+    SocialsModule],
   controllers: [AppController],
   providers: [AppService],
 })
