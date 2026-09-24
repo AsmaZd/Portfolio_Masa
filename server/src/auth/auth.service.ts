@@ -8,35 +8,29 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import passport from 'passport';
 import { hash } from 'crypto';
 import { Role } from '../users/enums/role.enum';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
     constructor( 
         private readonly usersService: UsersService,
-        private jwtService: JwtService
+        private readonly jwtService: JwtService
         ){}
 
     async register(registerDto: RegisterDto){
-        const hashedPassword = await bcrypt.hash(registerDto.password, 10);
         const newUser = await this.usersService.create({
             ...registerDto,
-            password: hashedPassword,
             role: Role.USER
         });
-        const payload = {
-            sub: newUser._id,
-            email: newUser.email,
-            role: newUser.role,
-            username: newUser.username
-        };
 
-        return {
-            access_token: await this.jwtService.signAsync(payload),
-        }
+        return this.signIn({
+            email: newUser.email, 
+            password: registerDto.password
+        });
+    };
 
-    }
 
-    async signIn(signInDto: SignInDto): Promise<{ access_token: string}>{
+    async signIn(signInDto: SignInDto){
         const user = await this.usersService.findOneByEmail(signInDto.email);
         if(!user){
             throw new UnauthorizedException ({message: "User inconnu"});
@@ -52,8 +46,11 @@ export class AuthService {
             username: user.username
         };
 
+        const token = this.jwtService.sign(payload);
+
         return {
-            access_token: await this.jwtService.signAsync(payload),
-        };
+            access_token: token,
+            message: 'Connecté avec succès' };
     }
+
 }
