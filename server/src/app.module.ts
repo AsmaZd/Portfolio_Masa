@@ -6,7 +6,11 @@ import { AppService } from './app.service';
 import { ArtworkModule } from './artworks/artworks.module';
 import { ConfigSet } from 'ts-jest';
 import { UserModule } from './users/users.module';
+<<<<<<< HEAD
 import { SocialsModule } from './socials/socials.module';
+=======
+import { AuthModule } from './auth/auth.module';
+>>>>>>> dev
 
 @Module({
   imports: [
@@ -23,7 +27,11 @@ import { SocialsModule } from './socials/socials.module';
     }),
     ArtworkModule,
     UserModule,
+<<<<<<< HEAD
     SocialsModule],
+=======
+    AuthModule],
+>>>>>>> dev
   controllers: [AppController],
   providers: [AppService],
 })
