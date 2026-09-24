@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Social } from './schemas/social.schema';
 import { Model } from 'mongoose';
+import { CreateSocialDto } from './dto/create-social.dto';
 
 @Injectable()
 export class SocialsService {
@@ -19,5 +20,10 @@ export class SocialsService {
             throw new NotFoundException('Social media with the "${id}" ID, not found')
         }
         return social;
+    }
+
+    async create(social: CreateSocialDto): Promise<Social>{
+        const createdSocial = new this.socialModel(social);
+        return createdSocial.save();
     }
 }
