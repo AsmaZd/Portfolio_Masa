@@ -13,6 +13,6 @@ export class SocialsController {
 
     @Get(':id')
     findOne(@Param('id', ParseObjectIdPipe) id: string){
-        return this.socialService.findOne('id');
+        return this.socialService.findOne(id);
     }
 }
