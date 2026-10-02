@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { SocialsService } from './socials.service';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { AuthGuard } from '../auth/guards/auth.guard';
@@ -25,5 +25,12 @@ export class SocialsController {
     @Post()
     create(@Body() social: CreateSocialDto){
         return this.socialService.create(social);
+    }
+
+    @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Delete(':id')
+    delete(@Param('id', ParseObjectIdPipe) id: string){
+        return this.socialService.delete(id);
     }
 }

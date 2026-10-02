@@ -26,4 +26,12 @@ export class SocialsService {
         const createdSocial = new this.socialModel(social);
         return createdSocial.save();
     }
+
+    async delete(id: string): Promise<Social | null>{
+        const deletedSocial = this.socialModel.findByIdAndDelete(id).exec();
+        if(!deletedSocial){
+            throw new NotFoundException('Social media with the "${id}" ID, not found')
+        }
+        return deletedSocial;
+    }
 }
