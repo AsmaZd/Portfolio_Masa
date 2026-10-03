@@ -8,6 +8,7 @@ import { ConfigSet } from 'ts-jest';
 import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SocialsModule } from './socials/socials.module';
+import { SkillsModule } from './skills/skills.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { SocialsModule } from './socials/socials.module';
     UserModule,
     SocialsModule,
     UserModule, 
-    AuthModule],
+    AuthModule, SkillsModule],
   controllers: [AppController],
   providers: [AppService],
 })
