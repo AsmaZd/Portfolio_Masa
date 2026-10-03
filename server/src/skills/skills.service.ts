@@ -1,0 +1,41 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { SkillsModule } from './skills.module';
+import { Skill } from './schemas/skill.schema';
+import { Model } from 'mongoose';
+import { CreateSkillDto } from './dto/create-skill.dto';
+import { UpdateSkillDto } from './dto/update_skill.dto';
+
+@Injectable()
+export class SkillsService {
+
+    constructor(
+        @InjectModel(Skill.name) private skillModel: Model<Skill>,
+    ){}
+
+    async findAll(): Promise<Skill[]>{
+        return this.skillModel.find().exec();
+    }
+
+    async findOne(id: string): Promise<Skill | null>{
+        const skill = this.skillModel.findById(id).exec();
+        if(!skill){
+            throw new NotFoundException('Skill with the "${id}" ID, not found');
+        }
+        return skill;
+    }
+
+    async create(skill: CreateSkillDto): Promise<Skill>{
+        const createdSkill = new this.skillModel(skill);
+        return createdSkill.save();
+    }
+
+    async update(id: string, skill: UpdateSkillDto): Promise<Skill>{
+        const updatedSkill = await this.skillModel.findByIdAndUpdate(id, skill, {returnDocument: 'after'}).exec();
+        if(!updatedSkill){
+            throw new NotFoundException('Skill with the "${id}" ID, not found')
+        }
+        return updatedSkill;
+    }
+    
+}
