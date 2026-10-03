@@ -4,6 +4,7 @@ import { SkillsModule } from './skills.module';
 import { Skill } from './schemas/skill.schema';
 import { Model } from 'mongoose';
 import { CreateSkillDto } from './dto/create-skill.dto';
+import { UpdateSkillDto } from './dto/update_skill.dto';
 
 @Injectable()
 export class SkillsService {
@@ -27,6 +28,14 @@ export class SkillsService {
     async create(skill: CreateSkillDto): Promise<Skill>{
         const createdSkill = new this.skillModel(skill);
         return createdSkill.save();
+    }
+
+    async update(id: string, skill: UpdateSkillDto): Promise<Skill>{
+        const updatedSkill = await this.skillModel.findByIdAndUpdate(id, skill, {returnDocument: 'after'}).exec();
+        if(!updatedSkill){
+            throw new NotFoundException('Skill with the "${id}" ID, not found')
+        }
+        return updatedSkill;
     }
     
 }
