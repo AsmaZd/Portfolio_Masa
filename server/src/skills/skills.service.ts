@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { SkillsModule } from './skills.module';
 import { Skill } from './schemas/skill.schema';
 import { Model } from 'mongoose';
+import { CreateSkillDto } from './dto/create-skill.dto';
 
 @Injectable()
 export class SkillsService {
@@ -21,6 +22,11 @@ export class SkillsService {
             throw new NotFoundException('Skill with the "${id}" ID, not found');
         }
         return skill;
+    }
+
+    async create(skill: CreateSkillDto): Promise<Skill>{
+        const createdSkill = new this.skillModel(skill);
+        return createdSkill.save();
     }
     
 }
