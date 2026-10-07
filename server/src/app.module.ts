@@ -9,6 +9,7 @@ import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SocialsModule } from './socials/socials.module';
 import { SkillsModule } from './skills/skills.module';
+import { AboutModule } from './about/about.module';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { SkillsModule } from './skills/skills.module';
     UserModule,
     SocialsModule,
     UserModule, 
-    AuthModule, SkillsModule],
+    AuthModule, SkillsModule, AboutModule],
   controllers: [AppController],
   providers: [AppService],
 })
