@@ -10,7 +10,7 @@ export class About extends Document{
     bio: string
 
     @Prop({ type: [{title: String, description: String, date: String}], default: []})
-    parcours: {title: String; description: String; date: String}[]
+    journey: {title: String; description: String; date: String}[]
 
     @Prop({default: null})
     cvUrl: string
