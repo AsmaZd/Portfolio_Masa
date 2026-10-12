@@ -4,7 +4,7 @@ import { SkillsModule } from './skills.module';
 import { Skill } from './schemas/skill.schema';
 import { Model } from 'mongoose';
 import { CreateSkillDto } from './dto/create-skill.dto';
-import { UpdateSkillDto } from './dto/update_skill.dto';
+import { UpdateSkillDto } from './dto/update-skill.dto';
 
 @Injectable()
 export class SkillsService {

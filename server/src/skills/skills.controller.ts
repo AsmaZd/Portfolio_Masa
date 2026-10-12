@@ -5,7 +5,7 @@ import { CreateSkillDto } from './dto/create-skill.dto';
 import { RoleGuard } from '../auth/guards/roles.guard';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { UpdateSkillDto } from './dto/update_skill.dto';
+import { UpdateSkillDto } from './dto/update-skill.dto';
 
 @Controller('skills')
 export class SkillsController {
