@@ -4,10 +4,11 @@ import { HomepageController } from './homepage.controller';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Homepage, HomepageSchema } from './schemas/homepage.schema';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
-    AuthGuard,
+    AuthModule,
     MongooseModule.forFeature([{name: Homepage.name, schema: HomepageSchema}])
   ],
   providers: [HomepageService],
