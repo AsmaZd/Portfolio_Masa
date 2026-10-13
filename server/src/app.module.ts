@@ -11,6 +11,7 @@ import { SocialsModule } from './socials/socials.module';
 import { SkillsModule } from './skills/skills.module';
 import { AboutModule } from './about/about.module';
 import { HomepageModule } from './homepage/homepage.module';
+import { GamesModule } from './games/games.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { HomepageModule } from './homepage/homepage.module';
     AuthModule, 
     SkillsModule, 
     AboutModule, 
-    HomepageModule],
+    HomepageModule, GamesModule],
   controllers: [AppController],
   providers: [AppService],
 })
