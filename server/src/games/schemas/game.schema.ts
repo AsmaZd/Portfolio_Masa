@@ -7,7 +7,7 @@ export class Game extends Document{
     title: string
 
     @Prop({default: null})
-    descritption: string
+    description: string
 
     @Prop({default: null})
     thumbnail: string
