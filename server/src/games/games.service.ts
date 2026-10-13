@@ -38,4 +38,13 @@ export class GamesService {
         }
         return updatedGame;
     }
+
+    async delete(id: string): Promise<Game | null>{
+        const deletedGame = this.gameModel.findByIdAndDelete(id).exec();
+        if (!deletedGame){
+            throw new NotFoundException('Game with the "${id}" ID, not found')
+        }
+
+        return deletedGame;
+    }
 }

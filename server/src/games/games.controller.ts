@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { GamesService } from './games.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RoleGuard } from '../auth/guards/roles.guard';
@@ -34,4 +34,12 @@ export class GamesController {
     update(@Param('id') id: string, @Body() game: UpdateGameDto){
         return this.gameService.update(id, game);
     }
+
+    @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Delete(':id')
+    delete(@Param('id') id: string){
+        return this.gameService.delete(id);
+    }
+
 }
