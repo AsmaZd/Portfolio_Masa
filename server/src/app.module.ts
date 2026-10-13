@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArtworkModule } from './artworks/artworks.module';
-import { ConfigSet } from 'ts-jest';
+// import { ConfigSet } from 'ts-jest';
 import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { SocialsModule } from './socials/socials.module';
