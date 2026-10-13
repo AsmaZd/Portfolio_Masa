@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { SocialsModule } from './socials/socials.module';
 import { SkillsModule } from './skills/skills.module';
 import { AboutModule } from './about/about.module';
+import { HomepageModule } from './homepage/homepage.module';
 
 @Module({
   imports: [
@@ -28,7 +29,10 @@ import { AboutModule } from './about/about.module';
     UserModule,
     SocialsModule,
     UserModule, 
-    AuthModule, SkillsModule, AboutModule],
+    AuthModule, 
+    SkillsModule, 
+    AboutModule, 
+    HomepageModule],
   controllers: [AppController],
   providers: [AppService],
 })
