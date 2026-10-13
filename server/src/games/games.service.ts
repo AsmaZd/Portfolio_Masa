@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Game } from './schemas/game.schema';
 import { Model } from 'mongoose';
 import { CreateGameDto } from './dto/create-game.dto';
+import { UpdateGameDto } from './dto/update-game.dto';
 
 @Injectable()
 export class GamesService {
@@ -28,5 +29,13 @@ export class GamesService {
     async create(game: CreateGameDto): Promise<Game>{
         const createdGame = new this.gameModel(game)
         return createdGame.save();
+    }
+
+    async update(id: string, game: UpdateGameDto): Promise<Game>{
+        const updatedGame = await this.gameModel.findByIdAndUpdate(id, game, {returnDocument: 'after'}).exec();
+        if(!updatedGame){
+            throw new NotFoundException('Game with the "${id}" ID, not found')
+        }
+        return updatedGame;
     }
 }
