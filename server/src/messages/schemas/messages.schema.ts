@@ -7,7 +7,7 @@ export class Message extends Document{
     name: string
 
     @Prop({required: true, trim: true})
-    mail: string
+    email: string
 
     @Prop({required: true})
     content: string
