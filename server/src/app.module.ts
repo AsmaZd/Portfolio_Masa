@@ -12,6 +12,7 @@ import { SkillsModule } from './skills/skills.module';
 import { AboutModule } from './about/about.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { GamesModule } from './games/games.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { GamesModule } from './games/games.module';
     AuthModule, 
     SkillsModule, 
     AboutModule, 
-    HomepageModule, GamesModule],
+    HomepageModule, GamesModule, MessagesModule],
   controllers: [AppController],
   providers: [AppService],
 })
