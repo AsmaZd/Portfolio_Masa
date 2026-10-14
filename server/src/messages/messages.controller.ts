@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { RoleGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Controller('messages')
 export class MessagesController {
@@ -27,5 +28,12 @@ export class MessagesController {
     @Post()
     create(@Body() message: CreateMessageDto){
         return this.messageService.create(message);
+    }
+
+    @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() message: UpdateMessageDto){
+        return this.messageService.update(id, message);
     }
 }

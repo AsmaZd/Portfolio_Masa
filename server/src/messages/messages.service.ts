@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Message } from './schemas/messages.schema';
 import { Model } from 'mongoose';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Injectable()
 export class MessagesService {
@@ -29,4 +30,13 @@ export class MessagesService {
         return createdMessage.save();
     }
 
+    async update(id: string, message: UpdateMessageDto): Promise<Message>{
+        const modifiedMessage = await this.messageModel.findByIdAndUpdate(id, message, {returnDocument: 'after'}).exec();
+
+        if(!modifiedMessage){
+            throw new NotFoundException('Message with the "${id}" ID, not found');
+        }
+
+        return modifiedMessage;
+    }
 }
