@@ -18,7 +18,7 @@ export class ArtworksService {
     }
 
     async findOne(id: string): Promise<Artwork | null> {
-        const artwork = this.artworkModel.findById(id).exec();
+        const artwork = await this.artworkModel.findById(id).exec();
         if(!artwork){
             throw new NotFoundException(`Artwork with the "${id}" ID, not found`);
         }
@@ -26,7 +26,7 @@ export class ArtworksService {
     }
 
     async create(artwork: CreateArtworkDto): Promise<Artwork>{
-        const createdArtwork = new this.artworkModel(artwork);
+        const createdArtwork = await new this.artworkModel(artwork);
         return createdArtwork.save();
     }
 
@@ -39,7 +39,7 @@ export class ArtworksService {
     }
 
     async delete(id: string): Promise<Artwork | null>{
-        const deletedArtwork = this.artworkModel.findByIdAndDelete(id).exec();
+        const deletedArtwork = await this.artworkModel.findByIdAndDelete(id).exec();
         if(!deletedArtwork){
             throw new NotFoundException(`Artwork with the "${id}" ID, not found`);
         }
