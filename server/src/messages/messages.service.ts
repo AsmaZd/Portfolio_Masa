@@ -4,11 +4,13 @@ import { Message } from './schemas/messages.schema';
 import { Model } from 'mongoose';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
+import { MailsService } from '../mails/mails.service';
 
 @Injectable()
 export class MessagesService {
     constructor(
-        @InjectModel(Message.name) private messageModel: Model<Message>
+        @InjectModel(Message.name) private messageModel: Model<Message>,
+        private readonly mailsService: MailsService
     ){}
 
     async findAll(): Promise<Message[]>{
@@ -27,6 +29,11 @@ export class MessagesService {
 
     async create(message: CreateMessageDto): Promise<Message>{
         const createdMessage = new this.messageModel(message);
+
+        this.mailsService
+            .sendContactNotification(message.name, message.email, message.content)
+            .catch(() => {})
+
         return createdMessage.save();
     }
 

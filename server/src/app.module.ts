@@ -13,6 +13,7 @@ import { AboutModule } from './about/about.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { GamesModule } from './games/games.module';
 import { MessagesModule } from './messages/messages.module';
+import { MailsModule } from './mails/mails.module';
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { MessagesModule } from './messages/messages.module';
     AuthModule, 
     SkillsModule, 
     AboutModule, 
-    HomepageModule, GamesModule, MessagesModule],
+    HomepageModule, GamesModule, MessagesModule, MailsModule],
   controllers: [AppController],
   providers: [AppService],
 })
