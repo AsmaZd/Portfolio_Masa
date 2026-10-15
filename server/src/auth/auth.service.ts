@@ -33,11 +33,11 @@ export class AuthService {
     async signIn(signInDto: SignInDto){
         const user = await this.usersService.findOneByEmail(signInDto.email);
         if(!user){
-            throw new UnauthorizedException ({message: "User inconnu"});
+            throw new UnauthorizedException ({message: 'User inconnu'});
         }
         const isPasswordValid = await bcrypt.compare(signInDto.password, user.password);
         if(!isPasswordValid){
-            throw new UnauthorizedException({message: "Mot de passe non valide"});
+            throw new UnauthorizedException({message: 'Mot de passe non valide'});
         }
         const payload = {
             sub: user._id, 

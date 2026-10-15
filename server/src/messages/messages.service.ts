@@ -18,17 +18,17 @@ export class MessagesService {
     }
 
     async findOne(id: string): Promise<Message | null>{
-        const message = this.messageModel.findById(id).exec();
+        const message = await this.messageModel.findById(id).exec();
 
         if(!message){
-            throw new NotFoundException('Message with the "${id}" ID, not found')
+            throw new NotFoundException(`Message with the "${id}" ID, not found`)
         }
 
         return message;
     }
 
     async create(message: CreateMessageDto): Promise<Message>{
-        const createdMessage = new this.messageModel(message);
+        const createdMessage = await new this.messageModel(message);
 
         this.mailsService
             .sendContactNotification(message.name, message.email, message.content)
@@ -41,7 +41,7 @@ export class MessagesService {
         const modifiedMessage = await this.messageModel.findByIdAndUpdate(id, message, {returnDocument: 'after'}).exec();
 
         if(!modifiedMessage){
-            throw new NotFoundException('Message with the "${id}" ID, not found');
+            throw new NotFoundException(`Message with the "${id}" ID, not found`);
         }
 
         return modifiedMessage;
@@ -51,7 +51,7 @@ export class MessagesService {
         const deletedMessage = await this.messageModel.findByIdAndDelete(id).exec();
 
         if(!deletedMessage){
-            throw new NotFoundException('Message with the "${id}" ID, not found');
+            throw new NotFoundException(`Message with the "${id}" ID, not found`);
         }
 
         return deletedMessage;

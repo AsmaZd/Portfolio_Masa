@@ -15,22 +15,22 @@ export class SocialsService {
     }
 
     async findOne(id: string): Promise<Social | null> {
-        const social = this.socialModel.findById(id).exec();
+        const social = await this.socialModel.findById(id).exec();
         if(!social){
-            throw new NotFoundException('Social media with the "${id}" ID, not found')
+            throw new NotFoundException(`Social media with the "${id}" ID, not found`)
         }
         return social;
     }
 
     async create(social: CreateSocialDto): Promise<Social>{
-        const createdSocial = new this.socialModel(social);
+        const createdSocial = await new this.socialModel(social);
         return createdSocial.save();
     }
 
     async delete(id: string): Promise<Social | null>{
-        const deletedSocial = this.socialModel.findByIdAndDelete(id).exec();
+        const deletedSocial = await this.socialModel.findByIdAndDelete(id).exec();
         if(!deletedSocial){
-            throw new NotFoundException('Social media with the "${id}" ID, not found')
+            throw new NotFoundException(`Social media with the "${id}" ID, not found`)
         }
         return deletedSocial;
     }

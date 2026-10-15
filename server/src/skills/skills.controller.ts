@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { SkillsService } from './skills.service';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { CreateSkillDto } from './dto/create-skill.dto';
@@ -31,7 +31,7 @@ export class SkillsController {
 
     @UseGuards(AuthGuard, RoleGuard)
     @Roles('admin')
-    @Put(':id')
+    @Patch(':id')
     update(@Param('id', ParseObjectIdPipe)id: string, @Body() skill: UpdateSkillDto){
         return this.skillService.update(id, skill);
     }
