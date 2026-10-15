@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { ArtworksService } from './artworks.service';
 import { CreateArtworkDto } from './dto/create-artwork.dto';
@@ -31,7 +31,7 @@ export class ArtworksController{
 
     @UseGuards(AuthGuard, RoleGuard)
     @Roles('admin')
-    @Put(':id')
+    @Patch(':id')
     update(@Param('id', ParseObjectIdPipe) id: string, @Body() artwork: UpdateArtworkDto){
         console.log(artwork);
         return this.artworksService.update(id, artwork);
