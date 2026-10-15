@@ -21,7 +21,7 @@ export class MessagesService {
         const message = this.messageModel.findById(id).exec();
 
         if(!message){
-            throw new NotFoundException('Message with the "${id}" ID, not found')
+            throw new NotFoundException(`Message with the "${id}" ID, not found`)
         }
 
         return message;
@@ -41,7 +41,7 @@ export class MessagesService {
         const modifiedMessage = await this.messageModel.findByIdAndUpdate(id, message, {returnDocument: 'after'}).exec();
 
         if(!modifiedMessage){
-            throw new NotFoundException('Message with the "${id}" ID, not found');
+            throw new NotFoundException(`Message with the "${id}" ID, not found`);
         }
 
         return modifiedMessage;
@@ -51,7 +51,7 @@ export class MessagesService {
         const deletedMessage = await this.messageModel.findByIdAndDelete(id).exec();
 
         if(!deletedMessage){
-            throw new NotFoundException('Message with the "${id}" ID, not found');
+            throw new NotFoundException(`Message with the "${id}" ID, not found`);
         }
 
         return deletedMessage;

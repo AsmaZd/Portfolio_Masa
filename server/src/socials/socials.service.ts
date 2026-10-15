@@ -17,7 +17,7 @@ export class SocialsService {
     async findOne(id: string): Promise<Social | null> {
         const social = this.socialModel.findById(id).exec();
         if(!social){
-            throw new NotFoundException('Social media with the "${id}" ID, not found')
+            throw new NotFoundException(`Social media with the "${id}" ID, not found`)
         }
         return social;
     }
@@ -30,7 +30,7 @@ export class SocialsService {
     async delete(id: string): Promise<Social | null>{
         const deletedSocial = this.socialModel.findByIdAndDelete(id).exec();
         if(!deletedSocial){
-            throw new NotFoundException('Social media with the "${id}" ID, not found')
+            throw new NotFoundException(`Social media with the "${id}" ID, not found`)
         }
         return deletedSocial;
     }

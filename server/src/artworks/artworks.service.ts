@@ -20,7 +20,7 @@ export class ArtworksService {
     async findOne(id: string): Promise<Artwork | null> {
         const artwork = this.artworkModel.findById(id).exec();
         if(!artwork){
-            throw new NotFoundException('Artwork with the "${id}" ID, not found');
+            throw new NotFoundException(`Artwork with the "${id}" ID, not found`);
         }
         return artwork;
     }
@@ -33,7 +33,7 @@ export class ArtworksService {
     async update(id: string, artwork: UpdateArtworkDto): Promise<Artwork | null>{
         const updatedArtwork = await this.artworkModel.findByIdAndUpdate(id, artwork, {returnDocument: 'after'}).exec(); 
         if(!updatedArtwork){
-            throw new NotFoundException('Artwork with the "${id}" ID, not found');
+            throw new NotFoundException(`Artwork with the "${id}" ID, not found`);
         }
         return updatedArtwork;
     }
@@ -41,7 +41,7 @@ export class ArtworksService {
     async delete(id: string): Promise<Artwork | null>{
         const deletedArtwork = this.artworkModel.findByIdAndDelete(id).exec();
         if(!deletedArtwork){
-            throw new NotFoundException('Artwork with the "${id}" ID, not found');
+            throw new NotFoundException(`Artwork with the "${id}" ID, not found`);
         }
         return deletedArtwork;
     }

@@ -20,7 +20,7 @@ export class SkillsService {
     async findOne(id: string): Promise<Skill | null>{
         const skill = this.skillModel.findById(id).exec();
         if(!skill){
-            throw new NotFoundException('Skill with the "${id}" ID, not found');
+            throw new NotFoundException(`Skill with the "${id}" ID, not found`);
         }
         return skill;
     }
@@ -33,7 +33,7 @@ export class SkillsService {
     async update(id: string, skill: UpdateSkillDto): Promise<Skill>{
         const updatedSkill = await this.skillModel.findByIdAndUpdate(id, skill, {returnDocument: 'after'}).exec();
         if(!updatedSkill){
-            throw new NotFoundException('Skill with the "${id}" ID, not found')
+            throw new NotFoundException(`Skill with the "${id}" ID, not found`)
         }
         return updatedSkill;
     }
