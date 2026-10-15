@@ -39,4 +39,14 @@ export class MessagesService {
 
         return modifiedMessage;
     }
+
+    async delete(id: string): Promise<Message>{
+        const deletedMessage = await this.messageModel.findByIdAndDelete(id).exec();
+
+        if(!deletedMessage){
+            throw new NotFoundException('Message with the "${id}" ID, not found');
+        }
+
+        return deletedMessage;
+    }
 }

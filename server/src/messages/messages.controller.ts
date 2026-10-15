@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { RoleGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -35,5 +35,12 @@ export class MessagesController {
     @Patch(':id')
     update(@Param('id') id: string, @Body() message: UpdateMessageDto){
         return this.messageService.update(id, message);
+    }
+
+    @UseGuards(AuthGuard, RoleGuard)
+    @Roles('admin')
+    @Delete(':id')
+    delete(@Param('id') id: string){
+        return this.messageService.delete(id);
     }
 }
