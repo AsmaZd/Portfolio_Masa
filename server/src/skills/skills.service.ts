@@ -18,7 +18,7 @@ export class SkillsService {
     }
 
     async findOne(id: string): Promise<Skill | null>{
-        const skill = this.skillModel.findById(id).exec();
+        const skill = await this.skillModel.findById(id).exec();
         if(!skill){
             throw new NotFoundException(`Skill with the "${id}" ID, not found`);
         }
@@ -26,7 +26,7 @@ export class SkillsService {
     }
 
     async create(skill: CreateSkillDto): Promise<Skill>{
-        const createdSkill = new this.skillModel(skill);
+        const createdSkill = await new this.skillModel(skill);
         return createdSkill.save();
     }
 

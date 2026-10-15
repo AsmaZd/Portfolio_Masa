@@ -18,7 +18,7 @@ export class MessagesService {
     }
 
     async findOne(id: string): Promise<Message | null>{
-        const message = this.messageModel.findById(id).exec();
+        const message = await this.messageModel.findById(id).exec();
 
         if(!message){
             throw new NotFoundException(`Message with the "${id}" ID, not found`)
@@ -28,7 +28,7 @@ export class MessagesService {
     }
 
     async create(message: CreateMessageDto): Promise<Message>{
-        const createdMessage = new this.messageModel(message);
+        const createdMessage = await new this.messageModel(message);
 
         this.mailsService
             .sendContactNotification(message.name, message.email, message.content)
