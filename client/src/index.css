@@ -1,4 +1,10 @@
 @import "tailwindcss";
+
+@theme{
+    --color-masabrown: #724a2d;
+    --color-masabeige: #ede6dc;
+}
+
 /* 
 :root {
   --text: #6b6375;
