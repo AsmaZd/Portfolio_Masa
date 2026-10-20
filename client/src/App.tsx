@@ -6,6 +6,7 @@ import './App.css'
 import Gallery from "./pages/gallery/Gallery";
 import Layout from './components/Layout'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
 
 function App() {
 
@@ -128,7 +129,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Gallery />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/gallerie" element={<Gallery />} />
         </ Route>
       </Routes>
     </BrowserRouter>
