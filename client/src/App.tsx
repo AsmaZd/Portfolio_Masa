@@ -4,6 +4,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import Gallery from "./pages/gallery/Gallery";
+import Layout from './components/Layout'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
 
@@ -123,10 +125,13 @@ function App() {
 }*/
 
   return (
-    <div>
-      <Gallery />
-    </div>
-
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Gallery />} />
+        </ Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
