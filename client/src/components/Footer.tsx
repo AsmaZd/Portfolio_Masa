@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { FaInstagram, FaTiktok } from "react-icons/fa6";
+import { FaInstagram, FaTiktok, FaLock } from "react-icons/fa6";
 import logoMasa from "../assets/logos/logo.svg"
 import React from "react";
 import api from "../api";
@@ -57,7 +57,7 @@ export default function Footer(){
             <div className="md:hidden flex flex-col items-center pb-2">
 
                 {/* copyright */}
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                     <Link to="/">
                         <img src={logoMasa} alt="Logo" className="h-8"/>
                     </Link>
@@ -66,6 +66,13 @@ export default function Footer(){
                             @ {new Date().getFullYear()} Masa_aart
                         </p>
                     </div>
+                    {/* connection admin */}
+                    <NavLink
+                        to='/admin_signin'
+                        className={"hover:text-masabeige/70"}
+                    >
+                        <FaLock/>
+                    </NavLink>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -87,7 +94,7 @@ export default function Footer(){
             <div className="hidden md:flex justify-around items-center gap-6">
 
                 {/* copyright */}
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
                     <Link to="/">
                         <img src={logoMasa} alt="Logo" className="h-8"/>
                     </Link>
@@ -97,6 +104,13 @@ export default function Footer(){
                             @ {new Date().getFullYear()} Masa_aart
                         </p>
                     </div>
+                    {/* connection admin */}
+                    <NavLink
+                        to='/admin_signin'
+                        className={"hover:text-masabeige/70"}
+                    >
+                        <FaLock/>
+                    </NavLink>
                 </div>
 
 
