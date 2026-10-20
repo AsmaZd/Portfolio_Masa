@@ -15,7 +15,7 @@ export class HomepageService {
     async findHomepage(): Promise<Homepage>{
         const homepage = await this.homepageModel
         .findOne()
-        .populate('featuredArtworks')
+        .populate('featuredArtwork')
         .populate('socials')
         .exec();
 
