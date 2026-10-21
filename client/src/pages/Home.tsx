@@ -2,33 +2,9 @@ import React from "react";
 import api from "../api";
 import { NavLink } from "react-router";
 import { FaInstagram, FaTiktok } from "react-icons/fa6";
-
-interface Artwork {
-    _id: string,
-    title: string,
-    description: string,
-    imageUrl: string,
-    category: string,
-    tags: string[],
-    isFeatured: boolean
-}
-
-interface Social {
-    _id: string,
-    plateform: string,
-    logo: string, 
-    pseudo: string, 
-    url: string
-}
-
-interface Homepage {
-    _id: string,
-    heroTitle: string,
-    heroSubtitle: string,
-    heroImage: string,
-    featuredArtwork: Artwork[],
-    socials: Social[]
-}
+import type { Social } from "../types/socials";
+import type { Artwork } from "../types/artwork";
+import type { Homepage } from "../types/homepage";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
     instagram: <FaInstagram/>,
@@ -38,7 +14,6 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 export default function Home(){
 
     const [homepage, setHomepage] = React.useState<Homepage | null>(null)
-    const [artworks, setArtworks] = React.useState([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [error, setError] = React.useState<string | null>(null);
 

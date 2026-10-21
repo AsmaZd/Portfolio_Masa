@@ -3,14 +3,7 @@ import { FaInstagram, FaTiktok, FaLock } from "react-icons/fa6";
 import logoMasa from "../assets/logos/logo.svg"
 import React from "react";
 import api from "../api";
-
-interface Social {
-    _id: string,
-    plateform: string,
-    logo: string, 
-    pseudo: string, 
-    url: string
-}
+import type { Social } from "../types/socials";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
     instagram: <FaInstagram/>,
