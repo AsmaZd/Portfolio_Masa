@@ -1,13 +1,38 @@
 import React from "react";
 import api from "../api";
+import { NavLink } from "react-router";
+import { FaInstagram, FaTiktok } from "react-icons/fa6";
+
+interface Artwork {
+    _id: string,
+    title: string,
+    description: string,
+    imageUrl: string,
+    category: string,
+    tags: string[],
+    isFeatured: boolean
+}
+
+interface Social {
+    _id: string,
+    plateform: string,
+    logo: string, 
+    pseudo: string, 
+    url: string
+}
 
 interface Homepage {
     _id: string,
     heroTitle: string,
-    heroSubTitle: string,
+    heroSubtitle: string,
     heroImage: string,
-    featuredArtwork: [],
-    socials: []
+    featuredArtwork: Artwork[],
+    socials: Social[]
+}
+
+const SOCIAL_ICONS: Record<string, React.ReactNode> = {
+    instagram: <FaInstagram/>,
+    tiktok: <FaTiktok/>
 }
 
 export default function Home(){
@@ -26,16 +51,64 @@ export default function Home(){
 
     return(
 
-        <div>
-            <h1> homepage</h1>
+        <div className="">
             { loading ? (
                 <p> loading </p>
             ) : error ? (
                 <p> error </p>
             ) : homepage ? (
-                <div>
-                    <p>{homepage.heroTitle}</p>
+
+                <div className="flex flex-col text-masabrown text-sm gap-2">
+                    {/* hero */}
+                    <div>
+                        <h1 className="text-xl font-extrabold">{homepage.heroTitle}</h1>
+                        <div className="flex items-center gap-4" >
+                            <img src={"./.." + homepage.heroImage} alt="Image"></img>
+                            <p className="text-justify">{homepage.heroSubtitle}</p>
+                        </div>
+                    </div>
+
+                    {/* artworks */}
+                    <div>
+                        <h1 className="font-bold"> Galerie: </h1>
+                        {homepage.featuredArtwork.map((artwork) => (
+                            <div className="flex flex-col">
+                                <p>{artwork.title}</p>
+                                <p>{artwork.description}</p>
+                            </div>
+
+                        ))}
+                    </div>
+
+                    {/* jeu */}
+                    <div>
+                        <NavLink to={'/jeu'}>
+                            <hr className="w-full h-1 my-4 bg-masabrown md:my-10"/>
+                        </NavLink>
+                    </div>
+
+                    {/* reseaux sociaux */}
+                    <div>
+                        <h1 className="font-bold"> Réseaux sociaux:</h1>
+                        <div className="flex flex-col gap-2 md:flex-row md:justify-center md:gap-10">
+                            {homepage.socials.map((social) => (
+                                <div className="flex flex-col">
+                                    <a 
+                                        key={social._id}
+                                        href={social.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center hover:text-masabrown/50 gap-2">
+                                    {SOCIAL_ICONS[social.plateform.toLowerCase()] ?? social.plateform}
+                                    {social.pseudo}
+                                    </a>
+                                    <p>description</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
+                
             ) : null }
         </div>
 
