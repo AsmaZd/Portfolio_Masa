@@ -22,10 +22,7 @@ export default function Navbar(){
             <NavLink
                 key={link.to}
                 to={link.to}
-                className={isMobile
-                    ? "text-masabeige hover:text-masabeige/70"
-                    : "text-masabrown hover:text-masabrown/50"
-                }
+                className= "text-masabeige hover:text-masabeige/70"
                 onClick={() => isMobile && setOpen(false)}
                 >
                 {link.label}
@@ -33,24 +30,24 @@ export default function Navbar(){
         );
 
     return(
-        <nav className="flex fixed top-0 left-0 w-full bg-masabeige">
+        <nav className="flex fixed top-0 left-0 w-full bg-masabrown text-masabeige">
             <div className="flex w-full">
 
                 {/* VERSION MOBILE */}
                 <div className="md:hidden grid grid-cols-3 w-full items-center p-2">
 
                     {/* logo */}
-                    <Link to="/" className="flex justify-start text-masabrown">
+                    <Link to="/" className="flex justify-start">
                         <img src={logoMasa} alt="Logo" className="h-8 w-auto" />
                     </Link>
 
                     {/* titre */}
-                    <div className="flex justify-center text-masabrown">
+                    <div className="flex justify-center">
                         <h1> Portfolio </h1>
                     </div>
 
                     {/* bouton burger*/}
-                    <button className="flex justify-end text-masabrown hover:text-masabrown/50"
+                    <button className="flex justify-end hover:text-masabeige/70"
                             onClick={() => setOpen(true)}
                             aria-label="Menu"
                     >
@@ -62,7 +59,7 @@ export default function Navbar(){
                 {/* VERSION DESKTOP */}
                 <div className="hidden md:flex w-full justify-between items-center px-4 py-2">
                     {/* logo */}
-                    <Link to="/" className="flex items-center gap-3 text-masabrown">
+                    <Link to="/" className="flex items-center gap-3">
                         <img src={logoMasa} alt="Logo" className="h-12 w-auto" />
                         <h1 className="text-xl"> Portfolio </h1>
                     </Link>
