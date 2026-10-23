@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import logoMasa from '../assets/logos/logo.svg'
 
 const NAVIGATION_LINKS = [
-    { to: "/gallerie", label: "Galerie" },
+    { to: "/galerie", label: "Galerie" },
     { to: "/jeu", label: "Jeu" },
     { to: "/about", label: "A propos"},
     { to: "/contact", label: "Contact"}
@@ -38,7 +38,7 @@ export default function Navbar(){
 
                     {/* logo */}
                     <Link to="/" className="flex justify-start">
-                        <img src={logoMasa} alt="Logo" className="h-8 w-auto" />
+                        <img src={logoMasa} alt="Logo" className="h-8 w-auto border-1 border-masabeige rounded-full" />
                     </Link>
 
                     {/* titre */}
@@ -60,7 +60,7 @@ export default function Navbar(){
                 <div className="hidden md:flex w-full justify-between items-center px-4 py-2">
                     {/* logo */}
                     <Link to="/" className="flex items-center gap-3">
-                        <img src={logoMasa} alt="Logo" className="h-12 w-auto" />
+                        <img src={logoMasa} alt="Logo" className="h-12 w-auto border-2 border-masabeige rounded-full" />
                         <h1 className="text-xl"> Portfolio </h1>
                     </Link>
                         
