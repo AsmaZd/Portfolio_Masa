@@ -29,22 +29,24 @@ export default function Gallery(){
     )  
 
     return(
-        <div>
+        <div className="flex flex-col gap-2">
             <h1>Galerie</h1>
 
             {/* navbar */}
-            <nav className="flex justify-center text-sm">
+            <nav className="flex justify-center text-masabrown text-sm font-semibold md:text-base">
                 <div className="flex flex-row justify-center md:justify-evenly min-w-4/6 px-4 py-1 rounded-lg bg-masabeige gap-2">
                     <button onClick={() => setCategory(ArtworkCategory.ILLU)}
-                            className="hover:text-white">
+                            className="hover:text-masabrown/50">
                             illustration
                     </button>
+                    <p className="text-white font-bold">|</p>
                     <button onClick={() => setCategory(ArtworkCategory.DESIGN)} 
-                            className="hover:text-white">
+                            className="hover:text-masabrown/50">
                             design
                     </button>
+                    <p className="text-white font-bold">|</p>
                     <button onClick={() => setCategory(ArtworkCategory.CROCHET)}
-                            className="hover:text-white">
+                            className="hover:text-masabrown/50">
                             crochet
                     </button>
                 </div>
@@ -58,7 +60,7 @@ export default function Gallery(){
                     <p> error </p>
                 ) : artworks ? (
                     <div>
-                        <p>artworks</p>
+                        {/* illustration */}
                         {category === ArtworkCategory.ILLU && (
                             filteredArtworks.map((artwork) => (
                                 <div className="flex gap-2 bg-green-500">
@@ -68,6 +70,7 @@ export default function Gallery(){
                                 </div>
                             ))                        
                         )}
+                        {/* design */}
                         {category === ArtworkCategory.DESIGN && (
                             filteredArtworks.map((artwork) => (
                                 <div className="flex gap-2 bg-blue-500">
@@ -77,6 +80,7 @@ export default function Gallery(){
                                 </div>
                             ))                        
                         )}
+                        {/* crochet */}
                         {category === ArtworkCategory.CROCHET && (
                             filteredArtworks.map((artwork) => (
                                 <div className="flex gap-2 bg-red-500">
