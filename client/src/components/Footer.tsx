@@ -56,7 +56,7 @@ export default function Footer(){
                     </Link>
                     <div className="">
                         <p>
-                            @ {new Date().getFullYear()} Masa_aart
+                            © {new Date().getFullYear()} Masa_aart
                         </p>
                     </div>
                     {/* connection admin */}
@@ -94,7 +94,7 @@ export default function Footer(){
 
                     <div className="">
                         <p>
-                            @ {new Date().getFullYear()} Masa_aart
+                            © {new Date().getFullYear()} Masa_aart
                         </p>
                     </div>
                     {/* connection admin */}

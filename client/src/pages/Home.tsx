@@ -47,7 +47,7 @@ export default function Home(){
                     <div>
                         <h1 className="font-bold"> Galerie: </h1>
                         {homepage.featuredArtwork.map((artwork) => (
-                            <div className="flex flex-col">
+                            <div key={artwork._id} className="flex flex-col">
                                 <p>{artwork.title}</p>
                                 <p>{artwork.description}</p>
                             </div>
@@ -60,6 +60,7 @@ export default function Home(){
                         <NavLink to={'/jeu'}>
                             <hr className="w-full h-1 my-4 bg-masabrown md:my-10"/>
                         </NavLink>
+                        <p>jfhfdkf hdkfudgkudfhflsdhfkjvdh nufgksqdhfjsgkfsgfjkvhhc kfdhv kdfhgv rhugvrdu yfukeyrguer ugyreufy ury gvuoeroug y kjdfghku fd gh vguu ifhsukeg wfukgrufg us guf su lishkfgsd hdskjvsgkfvk urgurg gfg fgsukgfukghfgs fgsg fugskugfkus gdukfvgfksgfvukfsg vukg fkug vukfw gkvgfwukfhkdjsg vj swgjg kgu ug</p>
                     </div>
 
                     {/* reseaux sociaux */}
@@ -67,7 +68,7 @@ export default function Home(){
                         <h1 className="font-bold"> Réseaux sociaux:</h1>
                         <div className="flex flex-col gap-2 md:flex-row md:justify-center md:gap-10">
                             {homepage.socials.map((social) => (
-                                <div className="flex flex-col">
+                                <div key={social._id} className="flex flex-col">
                                     <a 
                                         key={social._id}
                                         href={social.url}
