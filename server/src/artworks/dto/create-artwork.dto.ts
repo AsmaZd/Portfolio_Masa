@@ -1,7 +1,7 @@
-import { IsString, IsEnum, IsArray, IsBoolean, IsOptional } from "class-validator";
+import { IsString, IsEnum, IsArray, IsBoolean, IsOptional, isString } from "class-validator";
 
 enum Category{
-    dessin = 'dessin',
+    dessin = 'illustration',
     design = 'design',
     crochet = 'crochet'
 }
@@ -18,6 +18,10 @@ export class CreateArtworkDto {
 
     @IsEnum(Category)
     category: Category;
+    
+    @IsOptional()
+    @IsString()
+    brand: string;
 
     @IsOptional()
     @IsArray()

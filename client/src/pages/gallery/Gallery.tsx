@@ -13,12 +13,18 @@ enum ArtworkCategory {
     CROCHET = "crochet"
 }
 
+enum DesignBrand {
+    SLICK = "slickspirits",
+    BEBERT = "bebert"
+}
+
 export default function Gallery(){
     const [artworks, setArtworks] = React.useState<Artwork[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [error, setError] = React.useState<string | null>(null);
 
     const [category, setCategory] = React.useState<ArtworkCategory>(ArtworkCategory.ILLU);
+    const [brand, setBrand] = React.useState<DesignBrand>(DesignBrand.SLICK);
 
     React.useEffect(() => {
         api.get('/artworks')
@@ -29,7 +35,11 @@ export default function Gallery(){
 
     const filteredArtworks = artworks.filter(
         (artwork) => artwork.category === category
-    )  
+    ) 
+    
+    const filteredDesign = artworks.filter(
+        (artwork) => artwork.brand === brand
+    )
 
     return(
         <div className="flex flex-col gap-2">
