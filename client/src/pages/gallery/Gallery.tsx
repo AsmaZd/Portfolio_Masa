@@ -5,7 +5,8 @@ import React from "react";
 import api from "../../api";
 import hero from "../../assets/react.svg";
 import masa from "../../assets/logos/logo.svg";
-
+// import useEmblaCarousel from 'embla-carousel-react'
+import { Carousel } from "../../components/Carousel";
 
 enum ArtworkCategory {
     ILLU = "illustration",
@@ -24,7 +25,9 @@ export default function Gallery(){
     const [error, setError] = React.useState<string | null>(null);
 
     const [category, setCategory] = React.useState<ArtworkCategory>(ArtworkCategory.ILLU);
-    const [brand, setBrand] = React.useState<DesignBrand>(DesignBrand.SLICK);
+    // const [brand, setBrand] = React.useState<DesignBrand>(DesignBrand.SLICK);
+
+    // const [emblaRef] = useEmblaCarousel();
 
     React.useEffect(() => {
         api.get('/artworks')
@@ -37,12 +40,12 @@ export default function Gallery(){
         (artwork) => artwork.category === category
     ) 
     
-    const filteredDesign = artworks.filter(
-        (artwork) => artwork.brand === brand
+    const slickDesigns = filteredArtworks.filter(
+        (artwork) => artwork.brand === "slickspirits"
     )
 
     return(
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
             <h1>Galerie</h1>
 
             {/* navbar */}
@@ -99,15 +102,32 @@ export default function Gallery(){
 
                         {/* design */}
                         {category === ArtworkCategory.DESIGN && (
-                            // appercu par univers
-
-                            // cards
-                            filteredArtworks.map((artwork) => (
-                                <div key={artwork._id} className="flex gap-2 bg-blue-500">
-                                        <p>{artwork.title}</p>
-                                        <p>{artwork.category}</p>
+                            <div className="flex flex-col gap-4">
+                                {/* appercu par univers */}
+                                <div className="flex px-4 md:justify-center">
+                                    <Carousel style="bg-masabrown w-full h-48 rounded-lg z-0 md:w-4/6">
+                                        <div>
+                                            {slickDesigns.map((artwork) => (
+                                                <div key={artwork._id} className="flex gap-2">
+                                                    <p>{artwork.title}</p>
+                                                    <p>{artwork.brand}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div> en cours </div>
+                                    </Carousel>
                                 </div>
-                            ))                        
+
+                                {/* cards */}
+                                <div>
+                                {filteredArtworks.map((artwork) => (
+                                    <div key={artwork._id} className="flex gap-2 bg-blue-500">
+                                            <p>{artwork.title}</p>
+                                            <p>{artwork.category}</p>
+                                    </div>
+                                ))} 
+                                </div>  
+                            </div>
                         )}
 
                         {/* crochet */}

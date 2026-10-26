@@ -30,7 +30,7 @@ export default function Navbar(){
         );
 
     return(
-        <nav className="flex fixed top-0 left-0 w-full bg-masabrown text-masabeige">
+        <nav className="flex fixed top-0 left-0 w-full bg-masabrown text-masabeige z-2">
             <div className="flex w-full">
 
                 {/* VERSION MOBILE */}
