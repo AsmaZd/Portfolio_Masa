@@ -27,7 +27,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     <div className={`relative overflow-hidden ${style}`}>
 
       {/* slides */}
-      <div style={{ transform: `translateX(-${currentIndex * 100}%)` }} className='flex'>
+      <div style={{ transform: `translateX(-${currentIndex * 100}%)` }} className='flex w-full h-full'>
         {children.map((child, index) => (
           <div key={index} className='w-full flex-shrink-0'>
             {child}
@@ -52,7 +52,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       </button>
 
       {/* indicators */}
-      <div className='absolute bottom-1 left-0 right-0 flex items-center justify-center gap-2'>
+      <div className='absolute bottom-4 md:bottom-6 left-0 right-0 flex items-center justify-center gap-2'>
         {children.map((_, index) => (
           <button
             key={index}

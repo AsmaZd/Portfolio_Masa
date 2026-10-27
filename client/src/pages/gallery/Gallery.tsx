@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getArtworks } from "../../services/api";
 import type { Artwork } from "../../types/artwork";
 import React from "react";
@@ -7,6 +7,7 @@ import hero from "../../assets/react.svg";
 import masa from "../../assets/logos/logo.svg";
 // import useEmblaCarousel from 'embla-carousel-react'
 import { Carousel } from "../../components/Carousel";
+import { Link, NavLink } from "react-router";
 
 enum ArtworkCategory {
     ILLU = "illustration",
@@ -28,6 +29,7 @@ export default function Gallery(){
     // const [brand, setBrand] = React.useState<DesignBrand>(DesignBrand.SLICK);
 
     // const [emblaRef] = useEmblaCarousel();
+    const iframeRef = useRef<HTMLIFrameElement>(null)
 
     React.useEffect(() => {
         api.get('/artworks')
@@ -40,9 +42,25 @@ export default function Gallery(){
         (artwork) => artwork.category === category
     ) 
     
-    const slickDesigns = filteredArtworks.filter(
-        (artwork) => artwork.brand === "slickspirits"
-    )
+    // const slickDesigns = filteredArtworks.filter(
+    //     (artwork) => artwork.brand === "slickspirits"
+    // )
+
+    const handleLoad = () => {
+        const iframeDoc = iframeRef.current?.contentDocument;
+        if(iframeDoc){
+            const style = iframeDoc.createElement('style');
+            style.innerHTML = `
+            *{
+                pointer-events: none !important;
+                user-select: none !important;
+            } html, body {
+                pointer-events: auto !important;
+            }
+            `;
+            iframeDoc.head.appendChild(style);
+        }
+    }
 
     return(
         <div className="flex flex-col gap-4">
@@ -106,15 +124,22 @@ export default function Gallery(){
                                 {/* appercu par univers */}
                                 <div className="flex px-4 md:justify-center">
                                     <Carousel style="bg-masabrown w-full h-48 rounded-lg inset-shadow-sm/50 inset-shadow-taupe-950 z-0 xs:h-64 md:w-4/6 md:h-96">
-                                        <div>
-                                            {slickDesigns.map((artwork) => (
-                                                <div key={artwork._id} className="flex gap-2">
-                                                    <p>{artwork.title}</p>
-                                                    <p>{artwork.brand}</p>
-                                                </div>
-                                            ))}
+                                        {/* slickspirits */}
+                                        <div className="flex flex-col h-full bg-black">
+                                            <iframe
+                                                ref={iframeRef}
+                                                src="/slickspirits"
+                                                title="apercu de slickspirits"
+                                                onLoad={handleLoad}
+                                                className="flex-1 w-full"
+                                                >
+                                            </iframe>
+                                            <NavLink to="/slickspirits" className="flex justify-center text-sm text-masabeige/50 hover:text-masabeige">
+                                                tu veux en voir plus ? 
+                                            </NavLink>
                                         </div>
-                                        <div> en cours </div>
+                                        {/* slickspirits */}
+                                        <div className=" h-full bg-blue-300"> en cours </div>
                                     </Carousel>
                                 </div>
 
