@@ -7,6 +7,16 @@
 
 @custom-variant xs (@media (48rem >= width >= 25rem ));
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 /* html, body, #root {
   margin: 0;
   padding: 0;

@@ -3,15 +3,12 @@ import { Link, NavLink } from "react-router-dom";
 import logoMasa from '../../../assets/logos/logo_dark.svg'
 import image from '../../../assets/images/hero.png'
 import slickspirits from '../../../assets/images/slick_spirit_white.png'
+import eg4 from '../../../assets/images/voiture.png'
 import api from "../../../api";
 import { FaInstagram, FaLock, FaTiktok } from "react-icons/fa6";
 import type { Social } from "../../../types/socials";
 import type { Artwork } from "../../../types/artwork";
-
-const SOCIAL_ICONS: Record<string, React.ReactNode> = {
-    instagram: <FaInstagram/>,
-    tiktok: <FaTiktok/>
-}
+import SlickSpiritsCard from "../../../components/SlickspiritsCard";
 
 const title = (name: string) => {
     return (
@@ -31,77 +28,137 @@ const title = (name: string) => {
 
 export default function SlickSpirits(){
 
-    const [socials, setSocials] = React.useState<Social[]>([]);
+    const [artworks, setArtworks] = React.useState<Artwork[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [error, setError] = React.useState<string | null>(null);
 
-    const [artworks, setArtworks] = React.useState<Artwork[]>([]);
-    const [loading2, setLoading2] = React.useState<boolean>(true);
-    const [error2, setError2] = React.useState<string | null>(null);
-
     React.useEffect(() => {
-        api.get("/socials")
-            .then((res) => setSocials(res.data))
-            .catch(() => setError("Impossible de charger les réseaux sociaux"))
+        api.get("/artworks")
+            .then((res) => setArtworks(res.data))
+            .catch(() => setError("Impossible de charger les artworks"))
             .finally(() => setLoading(false));
     }, []);
 
-    const socialsList = loading ? (
-        <p>loading</p>
-    ) : error ? (
-        <p> error </p>
-    ) : (
-        <div className="flex items-center gap-2">
-            {socials.map((social) => (
-                <a
-                    key={social._id}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-masabeige/70"
-                >
-                    {SOCIAL_ICONS[social.plateform.toLowerCase()] ?? social.plateform}
-                </a>
-            ))}
-        </div>
+    const filteredArtworks = artworks.filter(
+        (artwork) => artwork.brand === "slickspirits"
     )
 
-    const artworkList = loading2 ? (
-        <p>loading</p>
-    ) : error2 ? (
-        <p> error </p>
-    ) : artworks ? (
-        <div className="flex items-center gap-2">
-            {artworks.map((artwork) => (
-                <></>
-            ))}
-        </div>
-    ) : null;
-
+    const filteredTagArtworks = (mytag: string) => 
+        filteredArtworks.filter((artwork) => artwork.tags?.includes(mytag)
+    )
 
     return(
-        <body className="bg-black flex flex-col h-full min-h-screen gap-2">
+        <div className="bg-black flex flex-col h-full min-h-screen gap-2">
             <nav className="relative">
                 <Link to="/" className="">
-                    <img src={logoMasa} alt="Logo" className="absolute h-10 pl-1 pt-1 md:h-16 w-auto md:pl-2 md:pt-3 z-10" />
+                    <img src={logoMasa} alt="Logo" 
+                        loading="lazy" 
+                        className="absolute h-10 pl-1 pt-1 md:h-16 w-auto md:pl-2 md:pt-3 z-10" />
                 </Link>
-                <img src={slickspirits} alt="slickspirits" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 z-10"></img>
-                <img  src={image} alt="image" className=" top-0 w-full h-auto [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]"></img>
+                <img src={slickspirits} alt="slickspirits" 
+                    loading="lazy" 
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 z-10"></img>
+                <img  src={image} alt="image" 
+                    loading="lazy" 
+                    className="top-0 w-full h-auto [mask-image:linear-gradient(to_bottom,black_50%,transparent_100%)]"></img>
             </nav>
 
             <main className="flex-1 px-2">
                 {/* présentation groupe */}
-                <div></div>
+                <div className="flex flex-row item-center mx-auto w-full md:w-3/4 gap-2">
+
+                    <p className="[writing-mode:vertical-rl] text-white font-bold shrink-0 px-1 tracking-widest">
+                        スリック•スピリット
+                    </p>
+
+                    <div className="flow-root text-white">
+
+                        <h1 className="md:hidden font-bold text-base md:text-lg"> Slick Spirits</h1>
+
+                        <div className="float-right ml-4 mb-2 w-2/3 md:w-2/5 [shape-outside:polygon(50%_0%,_100%_50%,_50%_100%,_0%_50%)]">
+                            <img 
+                            src={eg4} 
+                            alt="eg4" 
+                            className="w-full h-auto object-cover"
+                            />
+                        </div>
+
+                        <h1 className="hidden md:block md:font-bold md:text-base md:text-lg"> Slick Spirits</h1>
+                        <p className="text-xs md:text-sm leading-relaxed mb-3">
+                            Voici un exemple simple où le texte vient s'enrouler ler sur la gauche, épousant l'espace laissé libre par l'image placée à droite. k ler sur la gauche, épousant l'espace laissé libre par l'image placée à droite. k ler sur la gauche, épousant l'espace laissé libre par l'image placée à droite. kv ler sur la gauche, épousant l'espace laissé libre par l'image placée à droite. k sur la gauche, épousant l'espace laissé libre par l'image placée à droite. kdxjls hcihfidsh io fdioyiofdyfiofd iofyh fdiofy oduy void iy voifdio vyhdfioy vudyf ouvyodfui vioydf iovyiofdyovidyf oivy iofdyvioydf yvo_ifd yovy ofdy voy fdoy v_ofy_ody vofy vofy _ovyfd_ovy fyvo_udy ofy o
+                        </p>
+
+                    </div>
+                </div>
 
                 {/* galerie */}
                 <div className="text-white">
-                    {title("LOGO")}
+                    {loading ? (
+                        <p> loading </p>
+                    ) : error ? (
+                        <p> error </p>
+                    ) : artworks ? (
 
-                    {title("STICKERS")}
+                    <div className="flex flex-col gap-4">
 
-                    {title("VETEMENT")}
+                        {title("LOGOS")}
+                        <div className="flex flex-row overflow-x-auto no-scrollbar gap-4 p-2 md:gap-10">
+                            {filteredTagArtworks("logo").map((artwork) =>(
+                                <div key={artwork._id} className="w-4/5 shrink-0 md:w-1/5 xs:w-2/5">
+                                    <SlickSpiritsCard 
+                                        title={artwork.title} 
+                                        description={artwork.description} 
+                                        image={slickspirits} 
+                                        tags={artwork.tags}
+                                    />
+                                </div>
+                            ))}
+                        </div>
 
-                    {title("MASCOTTE")}
+                        {title("STICKERS")}
+                        <div className="flex flex-row overflow-x-auto no-scrollbar gap-4 p-2 md:gap-10">
+                            {filteredTagArtworks("sticker").map((artwork) =>(
+                                <div key={artwork._id} className="w-4/5 shrink-0 md:w-1/5 xs:w-2/5">
+                                    <SlickSpiritsCard 
+                                        title={artwork.title} 
+                                        description={artwork.description} 
+                                        image={slickspirits} 
+                                        tags={artwork.tags}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+                        {title("TEXTILES")}
+                        <div className="flex flex-row overflow-x-auto no-scrollbar gap-4 p-2 md:gap-10">
+                            {filteredTagArtworks("textile").map((artwork) =>(
+                                <div key={artwork._id} className="w-4/5 shrink-0 md:w-1/5 xs:w-2/5">
+                                    <SlickSpiritsCard 
+                                        title={artwork.title} 
+                                        description={artwork.description} 
+                                        image={slickspirits} 
+                                        tags={artwork.tags}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+                        {title("MASCOTTE")}
+                        <div className="flex flex-row overflow-x-auto no-scrollbar gap-4 p-2 md:gap-10">
+                            {filteredTagArtworks("mascotte").map((artwork) =>(
+                                <div key={artwork._id} className="w-4/5 shrink-0 md:w-1/5 xs:w-2/5">
+                                    <SlickSpiritsCard 
+                                        title={artwork.title} 
+                                        description={artwork.description} 
+                                        image={slickspirits} 
+                                        tags={artwork.tags}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    ) : null}
                 </div>
 
             </main>
@@ -110,7 +167,7 @@ export default function SlickSpirits(){
                 {/* copyright */}
                 <div className="flex items-center gap-2 md:gap-4">
                     <Link to="/">
-                        <img src={logoMasa} alt="Logo" className="h-8"/>
+                        <img src={logoMasa} alt="Logo" loading="lazy" className="h-8"/>
                     </Link>
                     <div>
                         <p>
@@ -136,11 +193,19 @@ export default function SlickSpirits(){
                     </NavLink>
                     |
                     {/* reseaux sociaux */}
-                    {socialsList}
+                    <a
+                        key="insta"
+                        href="https://www.instagram.com/_slickspirits_?srtk=OXdlbWZmbnQ1M3dx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-masabeige/70"
+                    >
+                        <FaInstagram/>
+                    </a>
                 </div>
             </footer>
         
-        </body>
+        </div>
     )
 
 }
