@@ -1,5 +1,5 @@
 import React from 'react';
-import logoMasa from '../assets/logos/logo_dark.svg'
+import logoMasa from '../../assets/logos/logo_dark.svg'
 
 
 interface CardProps {
