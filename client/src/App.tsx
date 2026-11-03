@@ -5,7 +5,9 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import Gallery from "./pages/gallery/Gallery";
 import Layout from './components/Layout'
+import SlickSpirits from './pages/gallery/brandGallery/SlickSpirits'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
 
 function App() {
 
@@ -128,8 +130,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<Gallery />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/galerie/" element={<Gallery />} />
         </ Route>
+        <Route path="/slickspirits" element={<SlickSpirits />} />
       </Routes>
     </BrowserRouter>
   )
