@@ -4,6 +4,7 @@ export interface Artwork {
     description: string,
     imageUrl: string,
     category: string,
+    brand: string,
     tags: string[],
     isFeatured: boolean
 }
