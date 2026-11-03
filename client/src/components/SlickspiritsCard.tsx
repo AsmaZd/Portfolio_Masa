@@ -27,7 +27,7 @@ export default function SlickSpiritsCard({title, description, image, tags}: Card
                     Lire la suite →
                 </button>
                 <div className="flex mt-auto gap-2 ">{tags.map((tag) => (
-                    <p className="text-[0.5rem] italic text-white/70 md:text-sm"> {tag} </p>
+                    <p key={tag} className="text-[0.5rem] italic text-white/70 md:text-sm"> {tag} </p>
                 ))}</div>
             </div> 
         </div>
@@ -46,7 +46,7 @@ export default function SlickSpiritsCard({title, description, image, tags}: Card
                             Retour
                         </button>
                         <div className="flex mt-auto gap-2 ">{tags.map((tag) => (
-                            <p className="text-[0.5rem] italic text-white/70 md:text-sm"> {tag} </p>
+                            <p key={tag} className="text-[0.5rem] italic text-white/70 md:text-sm"> {tag} </p>
                         ))}</div>
                     </div> 
                 </div>

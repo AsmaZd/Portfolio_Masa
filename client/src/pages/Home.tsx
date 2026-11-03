@@ -26,7 +26,7 @@ export default function Home(){
 
     return(
 
-        <div className="">
+        <div className="md:pt-20 pt-14 px-2 ">
             { loading ? (
                 <p> loading </p>
             ) : error ? (
