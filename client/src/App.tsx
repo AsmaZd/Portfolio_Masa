@@ -8,6 +8,7 @@ import Layout from './components/Layout'
 import SlickSpirits from './pages/gallery/brandGallery/SlickSpirits'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
+import About from './pages/About'
 
 function App() {
 
@@ -132,6 +133,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/galerie/" element={<Gallery />} />
+          <Route path="/about" element={<About />}/>
         </ Route>
         <Route path="/slickspirits" element={<SlickSpirits />} />
       </Routes>
