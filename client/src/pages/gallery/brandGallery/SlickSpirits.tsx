@@ -8,7 +8,7 @@ import api from "../../../api";
 import { FaInstagram, FaLock, FaTiktok } from "react-icons/fa6";
 import type { Social } from "../../../types/socials";
 import type { Artwork } from "../../../types/artwork";
-import SlickSpiritsCard from "../../../components/Cards/SlickspiritsCard";
+import SlickSpiritsCard from "../../../components/cards/SlickspiritsCard";
 // import SlickSpiritsCard from "../../components/SlickspiritsCard";
 // import SlickSpiritsCard  from "../../../components/Cards/SlickspiritsCard";
 

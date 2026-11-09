@@ -17,6 +17,7 @@ export function AuthProvider({children}: {children: React.ReactNode}){
     const [user, setUser] = React.useState<User | null>(null);
     const [checkingAuth, setCheckinAuth] = React.useState(true);
 
+    
     // const navigate = useNavigate();
   
     React.useEffect(() => {

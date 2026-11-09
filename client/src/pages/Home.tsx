@@ -5,9 +5,11 @@ import { FaInstagram, FaTiktok } from "react-icons/fa6";
 import type { Social } from "../types/socials";
 import type { Artwork } from "../types/artwork";
 import type { Homepage } from "../types/homepage";
-import Card from "../components/Cards/Card";
+import Card from "../components/cards/Card";
 import masa from '../assets/logos/logo.svg'
 import Gallery from "./gallery/Gallery";
+import { useAuth } from "../context/AuthContext";
+import HeroEditModal from "../components/edits/HeroEditModel";
 
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
@@ -16,8 +18,11 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 }
 
 export default function Home(){
+    const {user} = useAuth();
 
-    const [homepage, setHomepage] = React.useState<Homepage | null>(null)
+    const [isHeroModalOpen, setIsHeroModalOpen] = React.useState<boolean>(false);
+
+    const [homepage, setHomepage] = React.useState<Homepage | null>(null);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [error, setError] = React.useState<string | null>(null);
 
@@ -33,6 +38,8 @@ export default function Home(){
     return(
 
         <div className="md:pt-20 pt-14 px-2 ">
+
+
             { loading ? (
                 <p> loading </p>
             ) : error ? (
@@ -42,11 +49,31 @@ export default function Home(){
                 <div className="flex flex-col text-masabrown text-sm gap-5">
                     {/* hero */}
                     <div>
-                        <h1 className="text-xl font-extrabold">{homepage.heroTitle}</h1>
-                        <div className="flex items-center gap-4" >
-                            <img src={"./.." + homepage.heroImage} alt="Image"></img>
-                            <p className="text-justify">{homepage.heroSubtitle}</p>
+                        <section className="">
+                        <div>
+                            <h1 className="text-xl font-extrabold">{homepage.heroTitle}</h1>
+                            <div className="flex items-center gap-4" >
+                                <img src={"./.." + homepage.heroImage} alt="Image"></img>
+                                <p className="text-justify">{homepage.heroSubtitle}</p>
+                            </div>
                         </div>
+
+                        {user && (
+                                <button onClick={() => {isHeroModalOpen ? setIsHeroModalOpen(false) : setIsHeroModalOpen(true)}}
+                                        className="bg-masabrown/80 text-masabeige rounded-sm my-2 p-1 hover:bg-masabrown">
+                                    {isHeroModalOpen ? "Modification en cours..." : "Modifier"}
+                                </button>
+                        )}
+                        </section>
+
+                        <HeroEditModal isOpen={isHeroModalOpen} 
+                                        currentHomepage={homepage} 
+                                        onClose={() => setIsHeroModalOpen(false)}
+                                        onSave={(updatedHomepage: Homepage) => {
+                                            setHomepage(updatedHomepage)
+                                }}>
+                            
+                        </HeroEditModal>
                     </div>
 
                     {/* artworks */}
@@ -72,7 +99,6 @@ export default function Home(){
                         <NavLink to={'/jeu'}>
                             <hr className="w-full h-1 my-4 bg-masabrown md:my-10"/>
                         </NavLink>
-                        {/* <p>jfhfdkf hdkfudgkudfhflsdhfkjvdh nufgksqdhfjsgkfsgfjkvhhc kfdhv kdfhgv rhugvrdu yfukeyrguer ugyreufy ury gvuoeroug y kjdfghku fd gh vguu ifhsukeg wfukgrufg us guf su lishkfgsd hdskjvsgkfvk urgurg gfg fgsukgfukghfgs fgsg fugskugfkus gdukfvgfksgfvukfsg vukg fkug vukfw gkvgfwukfhkdjsg vj swgjg kgu ug</p> */}
                     </div>
 
                     {/* reseaux sociaux */}
