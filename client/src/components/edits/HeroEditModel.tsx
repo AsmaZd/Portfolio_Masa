@@ -15,7 +15,7 @@ export default function HeroEditModal({isOpen, currentHomepage, onClose, onSave}
     const [homepageInput, setHomepageInput] = React.useState(currentHomepage);
     const [loading, setLoading] = React.useState<boolean>(false);
 
-    const { user } = useAuth();
+    // const { user } = useAuth();
 
     useEffect(() => {
         if (isOpen) {
@@ -42,9 +42,9 @@ export default function HeroEditModal({isOpen, currentHomepage, onClose, onSave}
         try{
             const { _id, createdAt, updatedAt, __v, featuredArtwork, socials, ...dataToSend } = homepageInput as any;
             await api.put('/homepage', dataToSend, {
-                headers: {
-                    Authorization: `Bearer ${user}`
-                }
+                // headers: {
+                //     Authorization: `Bearer ${user}`
+                // }
             })
             onSave(homepageInput);
             onClose()
