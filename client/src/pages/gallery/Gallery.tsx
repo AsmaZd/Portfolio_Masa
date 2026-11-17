@@ -9,6 +9,8 @@ import masa from "../../assets/logos/logo.svg";
 import { Carousel } from "../../components/Carousel";
 import { Link, NavLink } from "react-router";
 import { FaArrowTrendDown } from "react-icons/fa6";
+import { useAuth } from "../../context/AuthContext";
+import ArtworkEditModal from "../../components/edits/ArtworkEditModel";
 
 enum ArtworkCategory {
     ILLU = "illustration",
@@ -17,6 +19,8 @@ enum ArtworkCategory {
 }
 
 export default function Gallery(){
+    const {user} = useAuth();
+
     const [artworks, setArtworks] = React.useState<Artwork[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
     const [error, setError] = React.useState<string | null>(null);
@@ -24,7 +28,10 @@ export default function Gallery(){
     const [category, setCategory] = React.useState<ArtworkCategory>(ArtworkCategory.ILLU);
     const [selectedTag, setSelectedTag] = React.useState(null);
 
-    const [isOpen, setIsOpen] = React.useState<boolean>(false)
+    const [isTagOpen, setIsTagOpen] = React.useState<boolean>(false)
+
+    const [isArtworkModalOpen, setIsArtworkModalOpen] = React.useState<boolean>(false)
+    const [selectedArtwork, setSelectedArtwork] = React.useState<Artwork>();
 
     const iframeRef = useRef<HTMLIFrameElement>(null)
 
@@ -67,11 +74,11 @@ export default function Gallery(){
     }
 
     const tagListBlock = (
-        <div className="flex flex-row overflow-x-auto no-scrollbar items-center border-y-1 border-masabeige text-xs text-masabrown/80 py-1 gap-2 
+        <div className="flex flex-row overflow-x-auto no-scrollbar items-center border-y-1 border-masabeige text-xs text-masabrown/80 p-1 gap-2 
                         md:flex-col md:border-0 md:text-base md:py-0">
         {uniqueTags.map((tag) => {
         const isSelected = selectedTag === tag;
-        console.log(`Tag: "${tag}" | Selected: "${selectedTag}" | Est-ce égal ?`, isSelected);
+        // console.log(`Tag: "${tag}" | Selected: "${selectedTag}" | Est-ce égal ?`, isSelected);
         return (
         <button 
             key={tag} 
@@ -88,12 +95,12 @@ export default function Gallery(){
     return(
         <div className="md:flex md:flex-row md:pt-16 pt-14">
             {/* sidebar */}
-            {isOpen ? (
+            {isTagOpen ? (
                 <aside className="hidden md:sticky md:flex md:flex-col md:top-16 md:w-1/6 md:h-[calc(100dvh-4rem)] md:max-h-[calc(100dvh-4rem)] md:shrink-0 md:overflow-hidden md:bg-masabeige md:box-border">
                     <div className="relative flex items-center justify-between w-full border-b-2 border-masabrown">
                         <div className="w-9"></div>
                         <p className="absolute left-1/2 -translate-x-1/2 text-base text-masabrown font-bold"> Filtrer: </p>
-                        <button onClick={() => setIsOpen(false)} className="p-2 cursor-pointer shrink-0">
+                        <button onClick={() => setIsTagOpen(false)} className="p-2 cursor-pointer shrink-0">
                             <span className="text-lg text-masabrown hover:text-masabrown/50">☰</span>
                         </button>
                     </div>
@@ -103,7 +110,7 @@ export default function Gallery(){
                 </aside>
             ) : (
                 <aside className="hidden md:sticky md:top-16 md:shrink-0 md:h-[calc(100dvh-4rem)] md:flex md:flex-col md:items-center md:pt-3 md:px-2 bg-masabeige box-border">
-                    <button onClick={() => setIsOpen(true)} className="p-2 text-masabrown text-lg hover:text-masabrown/50 cursor-pointer">
+                    <button onClick={() => setIsTagOpen(true)} className="p-2 text-masabrown text-lg hover:text-masabrown/50 cursor-pointer">
                         ☰
                     </button>
                 </aside>
@@ -149,25 +156,53 @@ export default function Gallery(){
 
                             {/* illustration */}
                             {category === ArtworkCategory.ILLU && (
+                                <div>
                                 <div className="grid grid-cols-1 xs:grid-cols-2 p-2 gap-6 md:flex md:flex-col md:items-center">
                                     {filteredArtworksByTags.map((artwork, index) => (
                                         <div key={artwork._id} 
-                                            className={`max-w-[300px] justify-self-center rounded-lg bg-masabeige shadow-lg shadow-masabrown/50 p-2 
-                                                    md:flex md:flex-row md:max-w-full md:w-4/5 md:px-6 md:gap-4
-                                                    ${index % 2 === 1 ? "md:flex-row-reverse" : ""}`}
-                                        >
-                                            <img src={masa} alt={"illustration_image"} className="w-full aspect-[6/5] object-contain bg-masabrown/50 inset-shadow-sm/40 inset-shadow-masabrown md:w-1/3"></img>
+                                            className="max-w-[300px] justify-self-center rounded-lg bg-masabeige shadow-lg shadow-masabrown/50 p-2 
+                                                        md:max-w-full md:w-4/5 ">
+                                            <div 
+                                                className={`md:flex md:flex-row md:px-6 md:gap-4
+                                                        ${index % 2 === 1 ? "md:flex-row-reverse" : ""}`}
+                                            >
+                                            
+                                                <img src={masa} alt={"illustration_image"} className="w-full aspect-[6/5] object-contain bg-masabrown/50 inset-shadow-sm/40 inset-shadow-masabrown md:w-1/3"></img>
 
-                                            <div className="gap-1 md:w-2/3 md:flex md:flex-col">
-                                                <h1 className="font-bold text-masabrown md:text-xl">{artwork.title}</h1>
-                                                <p className="text-masabrown text-sm text-justify md:flex-1 md:text-base">{artwork.description}</p>
-                                                <div className="flex gap-2 ">{artwork.tags.map((tag) => (
-                                                    <p className="text-[0.7rem] italic text-masabrown/70 md:text-sm"> {tag} </p>
-                                                ))}</div>
-                                            </div> 
+                                                <div className="gap-1 md:w-2/3 md:flex md:flex-col">
+                                                    <h1 className="font-bold text-masabrown md:text-xl">{artwork.title}</h1>
+                                                    <p className="text-masabrown text-sm text-justify md:flex-1 md:text-base">{artwork.description}</p>
+                                                    <div className="flex gap-2 ">{artwork.tags.map((tag) => (
+                                                        <p className="text-[0.7rem] italic text-masabrown/70 md:text-sm"> {tag} </p>
+                                                    ))}</div>
+                                                </div> 
+                                            </div>
+
+                                            <section className="flex items-center">
+                                            {user && (
+                                                <button onClick={() => {setIsArtworkModalOpen(true) ; setSelectedArtwork(artwork)}}
+                                                        className="bg-masabrown/80 text-masabeige mx-auto rounded-sm my-2 p-1 hover:bg-masabrown">
+                                                    {/* {isArtworkModalOpen ? "Modification en cours..." : "Modifier"} */}
+                                                    Modifier
+                                                </button>
+                                            )}
+                                            </section>
+ 
+                                        {/* </div> */}
                                         </div>
+
+                                       
                                     ))}
-                                </div>                       
+                                    </div>
+                                    <ArtworkEditModal isOpen={isArtworkModalOpen} 
+                                                                currentArtwork={selectedArtwork} 
+                                                                onClose={() => {setIsArtworkModalOpen(false); setSelectedArtwork(null)}} 
+                                                                onSave={(updatedArtworks: Artwork) => setArtworks(prev => prev.map(art => art._id === updatedArtworks._id ? updatedArtworks : art))}                                                           
+                                            >
+                                    </ArtworkEditModal>
+                                </div> 
+                                
+                                                     
                             )}
 
                             {/* design */}

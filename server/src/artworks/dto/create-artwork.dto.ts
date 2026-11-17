@@ -11,7 +11,7 @@ export class CreateArtworkDto {
     title: string; 
 
     @IsString()
-    descprition: string;
+    description: string;
 
     @IsString()
     imageUrl: string;
