@@ -11,6 +11,7 @@ import { Link, NavLink } from "react-router";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { useAuth } from "../../context/AuthContext";
 import ArtworkEditModal from "../../components/edits/ArtworkEditModel";
+import GalleryCard from "../../components/cards/GalleryCard";
 
 enum ArtworkCategory {
     ILLU = "illustration",
@@ -78,7 +79,7 @@ export default function Gallery(){
                         md:flex-col md:border-0 md:text-base md:py-0">
         {uniqueTags.map((tag) => {
         const isSelected = selectedTag === tag;
-        // console.log(`Tag: "${tag}" | Selected: "${selectedTag}" | Est-ce égal ?`, isSelected);
+
         return (
         <button 
             key={tag} 
@@ -91,6 +92,35 @@ export default function Gallery(){
         )}
         </div>
     )
+
+    const EditCardBlock = () =>
+        <div className="grid grid-cols-1 xs:grid-cols-2 mx-auto p-2 gap-6">
+            {filteredArtworksByTags.map((artwork, index) => (
+                <div key={artwork._id} className={`justify-self-center ${user ? "border-b-2 border-masabeige" : ""}`}>
+            
+                    <GalleryCard index={index} title={artwork.title} description={artwork.description} image={artwork.imageUrl} tags={artwork.tags}>
+                        
+                    </GalleryCard>
+
+                    <section className="flex items-center">
+                    {user && (
+                        <button onClick={() => {setIsArtworkModalOpen(true) ; setSelectedArtwork(artwork)}}
+                                className="bg-masabrown/80 text-masabeige mx-auto rounded-sm my-2 p-1 hover:bg-masabrown">
+                            {/* {isArtworkModalOpen ? "Modification en cours..." : "Modifier"} */}
+                            Modifier
+                        </button>
+                    )}
+                    </section>
+                </div>
+            ))}
+
+            <ArtworkEditModal isOpen={isArtworkModalOpen} 
+                                        currentArtwork={selectedArtwork} 
+                                        onClose={() => {setIsArtworkModalOpen(false); setSelectedArtwork(null)}} 
+                                        onSave={(updatedArtworks: Artwork) => setArtworks(prev => prev.map(art => art._id === updatedArtworks._id ? updatedArtworks : art))}                                                           
+                    >
+            </ArtworkEditModal>
+        </div>     
 
     return(
         <div className="md:flex md:flex-row md:pt-16 pt-14">
@@ -157,57 +187,14 @@ export default function Gallery(){
                             {/* illustration */}
                             {category === ArtworkCategory.ILLU && (
                                 <div>
-                                <div className="grid grid-cols-1 xs:grid-cols-2 p-2 gap-6 md:flex md:flex-col md:items-center">
-                                    {filteredArtworksByTags.map((artwork, index) => (
-                                        <div key={artwork._id} 
-                                            className="max-w-[300px] justify-self-center rounded-lg bg-masabeige shadow-lg shadow-masabrown/50 p-2 
-                                                        md:max-w-full md:w-4/5 ">
-                                            <div 
-                                                className={`md:flex md:flex-row md:px-6 md:gap-4
-                                                        ${index % 2 === 1 ? "md:flex-row-reverse" : ""}`}
-                                            >
-                                            
-                                                <img src={masa} alt={"illustration_image"} className="w-full aspect-[6/5] object-contain bg-masabrown/50 inset-shadow-sm/40 inset-shadow-masabrown md:w-1/3"></img>
-
-                                                <div className="gap-1 md:w-2/3 md:flex md:flex-col">
-                                                    <h1 className="font-bold text-masabrown md:text-xl">{artwork.title}</h1>
-                                                    <p className="text-masabrown text-sm text-justify md:flex-1 md:text-base">{artwork.description}</p>
-                                                    <div className="flex gap-2 ">{artwork.tags.map((tag) => (
-                                                        <p className="text-[0.7rem] italic text-masabrown/70 md:text-sm"> {tag} </p>
-                                                    ))}</div>
-                                                </div> 
-                                            </div>
-
-                                            <section className="flex items-center">
-                                            {user && (
-                                                <button onClick={() => {setIsArtworkModalOpen(true) ; setSelectedArtwork(artwork)}}
-                                                        className="bg-masabrown/80 text-masabeige mx-auto rounded-sm my-2 p-1 hover:bg-masabrown">
-                                                    {/* {isArtworkModalOpen ? "Modification en cours..." : "Modifier"} */}
-                                                    Modifier
-                                                </button>
-                                            )}
-                                            </section>
- 
-                                        {/* </div> */}
-                                        </div>
-
-                                       
-                                    ))}
-                                    </div>
-                                    <ArtworkEditModal isOpen={isArtworkModalOpen} 
-                                                                currentArtwork={selectedArtwork} 
-                                                                onClose={() => {setIsArtworkModalOpen(false); setSelectedArtwork(null)}} 
-                                                                onSave={(updatedArtworks: Artwork) => setArtworks(prev => prev.map(art => art._id === updatedArtworks._id ? updatedArtworks : art))}                                                           
-                                            >
-                                    </ArtworkEditModal>
-                                </div> 
-                                
-                                                     
+                                    <EditCardBlock></EditCardBlock>
+                                </div>                                                     
                             )}
 
                             {/* design */}
                             {category === ArtworkCategory.DESIGN && (
                                 <div className="flex flex-col gap-4">
+
                                     {/* appercu par univers */}
                                     <div className="flex px-4 md:justify-center">
                                         <Carousel style="bg-masabrown w-full h-48 rounded-lg inset-shadow-sm/50 inset-shadow-taupe-950 z-0 xs:h-64 md:w-4/6 md:h-96">
@@ -235,49 +222,15 @@ export default function Gallery(){
                                     </div>
 
                                     {/* cards */}
-                                    <div className="grid grid-cols-1 xs:grid-cols-2 p-2 gap-6 md:flex md:flex-col md:items-center">
-                                        {filteredArtworksByTags.map((artwork, index) => (
-                                            <div key={artwork._id} 
-                                                className={`max-w-[300px] justify-self-center rounded-lg bg-masabeige shadow-lg shadow-masabrown/50 p-2 
-                                                        md:flex md:flex-row md:max-w-full md:w-4/5 md:px-6 md:gap-4
-                                                        ${index % 2 === 1 ? "md:flex-row-reverse" : ""}`}
-                                            >
-                                                <img src={masa} alt={"illustration_image"} className="w-full aspect-[6/5] object-contain bg-masabrown/50 inset-shadow-sm/40 inset-shadow-masabrown md:w-1/3"></img>
-
-                                                <div className="gap-1 md:w-2/3 md:flex md:flex-col">
-                                                    <h1 className="font-bold text-masabrown md:text-xl">{artwork.title}</h1>
-                                                    <p className="text-masabrown text-sm text-justify md:flex-1 md:text-base">{artwork.description}</p>
-                                                    <div className="flex gap-2 ">{artwork.tags.map((tag) => (
-                                                        <p className="text-[0.7rem] italic text-masabrown/70 md:text-sm"> {tag} </p>
-                                                    ))}</div>
-                                                </div> 
-                                            </div>
-                                        ))}
-                                    </div>   
+                                    <EditCardBlock></EditCardBlock>
                                 </div>
                             )}
 
                             {/* crochet */}
                             {category === ArtworkCategory.CROCHET && (
-                                <div className="grid grid-cols-1 xs:grid-cols-2 p-2 gap-6 md:flex md:flex-col md:items-center">
-                                    {filteredArtworksByTags.map((artwork, index) => (
-                                        <div key={artwork._id} 
-                                            className={`max-w-[300px] justify-self-center rounded-lg bg-masabeige shadow-lg shadow-masabrown/50 p-2 
-                                                    md:flex md:flex-row md:max-w-full md:w-4/5 md:px-6 md:gap-4
-                                                    ${index % 2 === 1 ? "md:flex-row-reverse" : ""}`}
-                                        >
-                                            <img src={masa} alt={"illustration_image"} className="w-full aspect-[6/5] object-contain bg-masabrown/50 inset-shadow-sm/40 inset-shadow-masabrown md:w-1/3"></img>
-
-                                            <div className="gap-1 md:w-2/3 md:flex md:flex-col">
-                                                <h1 className="font-bold text-masabrown md:text-xl">{artwork.title}</h1>
-                                                <p className="text-masabrown text-sm text-justify md:flex-1 md:text-base">{artwork.description}</p>
-                                                <div className="flex gap-2 ">{artwork.tags.map((tag) => (
-                                                    <p className="text-[0.7rem] italic text-masabrown/70 md:text-sm"> {tag} </p>
-                                                ))}</div>
-                                            </div> 
-                                        </div>
-                                    ))}
-                                </div>                       
+                                <div>
+                                    <EditCardBlock></EditCardBlock>
+                                </div>                      
                             )}
 
                         </div>
