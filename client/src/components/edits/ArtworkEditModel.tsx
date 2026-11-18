@@ -45,6 +45,13 @@ export default function ArtworkEditModal({isOpen, currentArtwork, onClose, onSav
         setArtworkInput((prev) => ({...prev, tags: updatedTags}))
     }
 
+    const handleAddTag = () => {
+        setArtworkInput((prev) => ({
+            ...prev,
+            tags: [...(prev.tags || []), ""]
+        }))
+    }
+
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>){
         e.preventDefault();
 
@@ -66,7 +73,8 @@ export default function ArtworkEditModal({isOpen, currentArtwork, onClose, onSav
         <div className="fixed inset-0 flex flex-col items-center justify-center mx-auto md:w-1/2 bg-masabrown/50 gap-2 z-50"> 
             <h1 className="text-masabeige font-bold"> Modifier le contenu: </h1>
 
-            <form onSubmit={handleSubmit} className="flex flex-col items-center w-[90%] xs:w-2/3 rounded-lg text-masabrown p-2 gap-2 bg-masabeige 
+            <form onSubmit={handleSubmit} className="flex flex-col max-h-[80%] items-center w-[90%] xs:w-2/3 rounded-lg text-masabrown p-2 gap-2 bg-masabeige 
+                                overflow-hidden overflow-y-auto scrollbar-thumb-masabrown/50
                                 md:w-1/2 md:p-4 d:gap-4">
 
                 {/* {artworkInput.map((artwork, index) => ( */}
@@ -112,11 +120,20 @@ export default function ArtworkEditModal({isOpen, currentArtwork, onClose, onSav
                         </div>
 
                         <div className="w-4/5 xs:w-3/5">
-                            <label htmlFor="tag" className="font-bold">Tags </label>
+                            <div className="flex flex-row w-full items-center gap-2">
+                                <label htmlFor="tag" className="font-bold">Tags </label>
+                                <button onClick={handleAddTag}
+                                        type="button"
+                                        className="rounded-lg bg-masabrown/20 px-2 hover:bg-masabrown/30">
+                                    +
+                                </button>
+                            </div>
+
 
                             <div className="flex flex-row overflow-x-auto no-scrollbar p-1 gap-2">
                             {artworkInput.tags.map((tag, index) => (
-                                <div key={index}>
+                                // <div>
+                                <div key={index} className="flex flex-col items-center border-2 border-masabrown/10 rounded-sm p-1">
                                     <input id="tag" 
                                             name="tag"
                                             value={tag || ""}
@@ -124,7 +141,17 @@ export default function ArtworkEditModal({isOpen, currentArtwork, onClose, onSav
                                             onChange={(e) => handleTagChange(index, e.target.value)}
                                             className="text-center text-sm border-2 border-masabrown/20 bg-masabrown/15 focus:outline-2 focus:outline-masabrown p-1">
                                     </input>
+                                    <button onClick={() => {
+                                                const updatedTags = artworkInput.tags.filter((_, i) => i !== index);
+                                                setArtworkInput(prev => ({ ...prev, tags: updatedTags }));
+                                            }}
+                                            type="button"
+                                            className="text-masabrown hover:font-bold">
+                                        ✕
+                                    </button>
                                 </div>
+                                
+                                // {/* </div> */}
                             ))}
                             </div>
                             
