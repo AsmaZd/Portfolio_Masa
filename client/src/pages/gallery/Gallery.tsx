@@ -30,6 +30,7 @@ export default function Gallery(){
     const [selectedTag, setSelectedTag] = React.useState(null);
 
     const [isTagOpen, setIsTagOpen] = React.useState<boolean>(false)
+    const [isDeletePopUpOpen, setIsDeletePopUpOpen] = React.useState<boolean>(false);
 
     const [isArtworkModalOpen, setIsArtworkModalOpen] = React.useState<boolean>(false)
     const [selectedArtwork, setSelectedArtwork] = React.useState<Artwork>();
@@ -74,6 +75,15 @@ export default function Gallery(){
         }
     }
 
+    const handleDelete = (id: string) => {
+        try{
+            api.delete(`/artworks/${id}`);
+            setArtworks(prev => prev.filter(art => art._id !== id));
+        } catch(err){
+            console.log("Cet artwork ne s'est pas supprimé", err)
+        }
+    }
+
     const tagListBlock = (
         <div className="flex flex-row overflow-x-auto no-scrollbar items-center border-y-1 border-masabeige text-xs text-masabrown/80 p-1 gap-2 
                         md:flex-col md:border-0 md:text-base md:py-0">
@@ -102,15 +112,41 @@ export default function Gallery(){
                         
                     </GalleryCard>
 
-                    <section className="flex items-center">
                     {user && (
-                        <button onClick={() => {setIsArtworkModalOpen(true) ; setSelectedArtwork(artwork)}}
-                                className="bg-masabrown/80 text-masabeige mx-auto rounded-sm my-2 p-1 hover:bg-masabrown">
-                            {/* {isArtworkModalOpen ? "Modification en cours..." : "Modifier"} */}
-                            Modifier
+                        <div className="flex flex-row justify-center items-center gap-6">
+                        <section className="flex items-center">
+                        {/* {user && ( */}
+                            <button onClick={() => {setIsArtworkModalOpen(true) ; setSelectedArtwork(artwork)}}
+                                    className="bg-masabrown/80 text-masabeige rounded-sm my-2 p-1 hover:bg-masabrown">
+                                {/* {isArtworkModalOpen ? "Modification en cours..." : "Modifier"} */}
+                                Modifier
+                            </button>
+                        {/* )} */}
+                        </section>
+                        <button onClick={() => setIsDeletePopUpOpen(true)}
+                                className="bg-masabrown/80 text-masabeige rounded-sm my-2 p-1 hover:bg-masabrown">
+                                Supprimer
                         </button>
+
+                        {isDeletePopUpOpen && (
+                            <div className="fixed inset-0 flex flex-col m-auto justify-center w-[90%] aspect-[5/3] bg-masabeige border-2 border-masabrown rounded-lg z-50 gap-2
+                                            md:w-[20%]">
+                                <p className="flex justify-center font-bold text-masabrown"> T'es sur de toi ? </p>
+                                <div className="flex flex-row justify-center text-masabeige gap-4">
+                                    <button onClick={() => handleDelete(artwork._id)}
+                                            className="bg-masabrown rounded-sm px-4 py-1 hover:bg-masabrown/70">
+                                        Oui
+                                    </button>
+                                    <button onClick={() => setIsDeletePopUpOpen(false)}
+                                            className="bg-masabrown rounded-sm px-4 py-1 hover:bg-masabrown/70">
+                                        Non 
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                     )}
-                    </section>
+                    
                 </div>
             ))}
 
@@ -147,7 +183,7 @@ export default function Gallery(){
             )}
 
             {/* main page */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col w-full gap-4">
 
                 {/* navbar */}
                 <nav className="flex justify-center text-masabrown text-sm font-semibold pt-6 md:pt-8 md:text-base">
