@@ -1,9 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
-import { FaInstagram, FaTiktok, FaLock } from "react-icons/fa6";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { FaInstagram, FaTiktok, FaLock, FaLockOpen } from "react-icons/fa6";
 import logoMasa from "../assets/logos/logo.svg"
 import React from "react";
 import api from "../api";
 import type { Social } from "../types/socials";
+import { useAuth } from "../context/AuthContext";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
     instagram: <FaInstagram/>,
@@ -11,6 +12,16 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
 }
 
 export default function Footer(){
+    const {user, checkingAuth} = useAuth();
+    const navigate = useNavigate();
+
+    const handleLockClick = async () => {
+        if (user) {
+            navigate('/admin');
+        } else {
+            navigate('/admin_signin');
+        }
+    }
 
     const [socials, setSocials] = React.useState<Social[]>([]);
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -60,12 +71,9 @@ export default function Footer(){
                         </p>
                     </div>
                     {/* connection admin */}
-                    <NavLink
-                        to='/admin_signin'
-                        className={"hover:text-masabeige/70"}
-                    >
-                        <FaLock/>
-                    </NavLink>
+                    <button onClick={handleLockClick} className="hover:text-masabeige/70">
+                        {user ? <FaLockOpen/> : <FaLock/>}
+                    </button>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -98,12 +106,15 @@ export default function Footer(){
                         </p>
                     </div>
                     {/* connection admin */}
-                    <NavLink
+                    <button onClick={handleLockClick} className="hover:text-masabeige/70">
+                        {user ? <FaLockOpen/> : <FaLock/>}
+                    </button>
+                    {/* <NavLink
                         to='/admin_signin'
                         className={"hover:text-masabeige/70"}
                     >
                         <FaLock/>
-                    </NavLink>
+                    </NavLink> */}
                 </div>
 
 
